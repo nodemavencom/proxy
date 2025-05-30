@@ -1,9 +1,9 @@
 # NodeMaven - Professional Proxy API 🚀
 
 [![Python](https://img.shields.io/badge/Python-3.7%2B-blue?style=for-the-badge&logo=python)](https://github.com/nodemaven/nodemaven/tree/main/python)
-[![JavaScript](https://img.shields.io/badge/JavaScript-Coming%20Soon-yellow?style=for-the-badge&logo=javascript)](https://github.com/nodemaven/nodemaven/issues)
-[![PHP](https://img.shields.io/badge/PHP-Coming%20Soon-purple?style=for-the-badge&logo=php)](https://github.com/nodemaven/nodemaven/issues)
-[![Go](https://img.shields.io/badge/Go-Coming%20Soon-cyan?style=for-the-badge&logo=go)](https://github.com/nodemaven/nodemaven/issues)
+[![JavaScript](https://img.shields.io/badge/JavaScript-Coming%20Soon-yellow?style=for-the-badge&logo=javascript)](https://github.com/nodemavencom/proxy/issues)
+[![PHP](https://img.shields.io/badge/PHP-Coming%20Soon-purple?style=for-the-badge&logo=php)](https://github.com/nodemavencom/proxy/issues)
+[![Go](https://img.shields.io/badge/Go-Coming%20Soon-cyan?style=for-the-badge&logo=go)](https://github.com/nodemavencom/proxy/issues)
 
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![API](https://img.shields.io/badge/API-v2-orange?style=for-the-badge)](https://dashboard.nodemaven.com/documentation/v2/swagger?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=api_docs)
@@ -262,7 +262,7 @@ pip install -e .        # Install as development package
 | 🔗 **API Reference** | Complete API documentation | [View Docs](https://dashboard.nodemaven.com/documentation/v2/swagger?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=api_reference) |
 | 🎯 **Dashboard** | Manage account & usage | [Open Dashboard](https://dashboard.nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=dashboard) |
 | 💬 **Support** | 24/7 developer support | [Get Help](https://t.me/node_maven) |
-| 🐛 **Issues** | Report bugs | [GitHub Issues](https://github.com/nodemaven/nodemaven/issues) |
+| 🐛 **Issues** | Report bugs | [GitHub Issues](https://github.com/nodemavencom/proxy/issues) |
 
 ## 💰 Pricing (prices may vary)
 
@@ -301,7 +301,7 @@ We welcome contributions! Here's how you can help:
 1. **Add Language Support**: Implement SDKs for JavaScript, PHP, Go
 2. **Improve Examples**: Add more use cases and tutorials  
 3. **Enhance Documentation**: Better guides and explanations
-4. **Report Issues**: Found a bug? [Create an issue](https://github.com/nodemaven/nodemaven/issues)
+4. **Report Issues**: Found a bug? [Create an issue](https://github.com/nodemavencom/proxy/issues)
 5. **Feature Requests**: Suggest new features or improvements
 
 ## 🚨 Troubleshooting
@@ -327,7 +327,7 @@ We welcome contributions! Here's how you can help:
 - 📱 **Telegram**: [t.me/node_maven](https://t.me/node_maven)
 - 💬 **Live Chat**: [Dashboard Support](https://dashboard.nodemaven.com/support?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=live_chat)
 - 📖 **Documentation**: [API Docs](https://dashboard.nodemaven.com/documentation?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=documentation)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/nodemaven/nodemaven/issues)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/nodemavencom/proxy/issues)
 
 ## 📄 License
 
