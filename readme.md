@@ -7,7 +7,7 @@
 
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![API](https://img.shields.io/badge/API-v2-orange?style=for-the-badge)](https://dashboard.nodemaven.com/documentation/v2/swagger?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=api_docs)
-[![Dashboard](https://img.shields.io/badge/Dashboard-Live-success?style=for-the-badge)](https://dashboard.nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=dashboard_link)
+[![Dashboard](https://img.shields.io/badge/Dashboard-Live-success?style=for-the-badge)](https://dashboard.nodemaven.com/dashboard?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=dashboard_link)
 
 > **Enterprise-Grade Residential & Mobile Proxy API** - Global coverage, sticky sessions, and advanced geo-targeting for developers and businesses.
 
@@ -24,8 +24,8 @@
 
 ## 🚀 Quick Start (30 seconds!)
 
-### 1. Get Your API Key
-1. **Sign up**: [NodeMaven Dashboard](https://dashboard.nodemaven.com/register?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=signup_link)
+### 1. Get Your API Key 
+1. **Sign up**: [NodeMaven Dashboard](https://dashboard.nodemaven.com/accounts/signup?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=signup_link)
 2. **Get API key**: [Profile → API Keys](https://dashboard.nodemaven.com/profile?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=api_key)
 
 ### 2. Choose Your Language
@@ -261,7 +261,7 @@ pip install -e .        # Install as development package
 |----------|-------------|------|
 | 🔗 **API Reference** | Complete API documentation | [View Docs](https://dashboard.nodemaven.com/documentation/v2/swagger?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=api_reference) |
 | 🎯 **Dashboard** | Manage account & usage | [Open Dashboard](https://dashboard.nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=dashboard) |
-| 💬 **Support** | 24/7 developer support | [Get Help](https://dashboard.nodemaven.com/support?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=support_link) |
+| 💬 **Support** | 24/7 developer support | [Get Help](https://t.me/node_maven) |
 | 🐛 **Issues** | Report bugs | [GitHub Issues](https://github.com/nodemaven/nodemaven/issues) |
 
 ## 💰 Pricing (prices may vary)
@@ -321,11 +321,9 @@ We welcome contributions! Here's how you can help:
 1. **Check your credentials** in the [dashboard](https://dashboard.nodemaven.com/profile/)
 2. **Run quick test**: `python quick_test.py`
 3. **Check API status**: [Status Page](https://status.nodemaven.com)
-4. **Contact support**: [help@nodemaven.com](mailto:help@nodemaven.com)
 
 ## 📞 Support
 
-- 📧 **Email**: [support@nodemaven.com](mailto:support@nodemaven.com)
 - 📱 **Telegram**: [t.me/node_maven](https://t.me/node_maven)
 - 💬 **Live Chat**: [Dashboard Support](https://dashboard.nodemaven.com/support?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=live_chat)
 - 📖 **Documentation**: [API Docs](https://dashboard.nodemaven.com/documentation?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=documentation)
