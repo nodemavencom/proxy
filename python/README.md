@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.7%2B-blue?style=for-the-badge&logo=python)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](../LICENSE)
-[![API](https://img.shields.io/badge/API-v2-orange?style=for-the-badge)](https://dashboard.nodemaven.com/documentation/v2/swagger/?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_api_docs)
+[![API](https://img.shields.io/badge/API-v2-orange?style=for-the-badge)](https://dashboard.nodemaven.com/documentation/v2/swagger?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_api_docs)
 
 > **Professional Python client for NodeMaven's residential and mobile proxy API** - Global coverage, advanced targeting, and enterprise-grade reliability.
 
@@ -84,26 +84,6 @@ response = requests.get('https://httpbin.org/ip', proxies=proxies)
 print(f"Your IP: {response.json()['origin']}")
 ```
 
-### SOCKS5 Proxies
-
-```python
-from nodemaven.utils import get_socks5_proxy
-
-# Residential Canada with sticky session
-proxy_url = get_socks5_proxy(country="ca", sticky=True, filter="medium")
-# Result: socks5://aa101d91571b74-country-ca-ipv4-true-sid-abc123-filter-medium:aa101d91571b74@gate.nodemaven.com:1080
-
-# Mobile US with location targeting
-proxy_url = get_socks5_proxy(
-    country="us",
-    region="alabama", 
-    city="birmingham",
-    type="mobile",
-    filter="medium"
-)
-# Result: socks5://aa101d91571b74-country-us-region-alabama-city-birmingham-type-mobile-ipv4-true-filter-medium:aa101d91571b74@gate.nodemaven.com:1080
-```
-
 ## 🎯 Targeting Options
 
 | Parameter | Description | Example Values |
@@ -117,51 +97,6 @@ proxy_url = get_socks5_proxy(
 | `sticky` | Auto sticky session | `True`, `False` |
 | `filter` | IP quality filter | `low`, `medium`, `high` |
 | `ipv4` | IPv4 only | `True` (default), `False` |
-
-## 📋 Examples
-
-### Web Scraping
-```python
-from nodemaven.utils import get_proxy_config
-import requests
-
-# Rotate through different countries
-countries = ['us', 'gb', 'ca', 'de', 'fr']
-
-for country in countries:
-    proxies = get_proxy_config(country=country, filter="high")
-    response = requests.get('https://httpbin.org/ip', proxies=proxies)
-    print(f"{country.upper()}: {response.json()['origin']}")
-```
-
-### Ad Verification
-```python
-# Check ads from different locations
-locations = [
-    {'country': 'us', 'city': 'new_york'},
-    {'country': 'gb', 'city': 'london'},
-    {'country': 'de', 'city': 'berlin'}
-]
-
-for location in locations:
-    proxies = get_proxy_config(**location, filter="high")
-    # Verify ad content from this location
-    response = requests.get(ad_url, proxies=proxies)
-```
-
-### Price Monitoring
-```python
-# Monitor prices from different regions
-proxy_config = get_proxy_config(
-    country="us",
-    region="california", 
-    session="price_monitor_1",
-    filter="medium"
-)
-
-response = requests.get(ecommerce_url, proxies=proxy_config)
-price_data = response.json()
-```
 
 ## 🔧 API Methods
 
@@ -189,22 +124,6 @@ cities = client.get_cities(country_code='us', region_code='california')
 
 # Get ISPs in a location
 isps = client.get_isps(country_code='us', city_code='new_york')
-```
-
-## 🧪 Testing
-
-```bash
-# Test API connection
-python quick_test.py
-
-# Test proxy format
-python test_proxy_format.py
-
-# Run comprehensive examples
-python examples/proxy_examples.py
-
-# Verify format matches NodeMaven specs
-python test_format_verification.py
 ```
 
 ## 📊 Proxy URL Format
@@ -265,11 +184,11 @@ proxy_url = get_socks5_proxy(country="us", filter="low")
 
 ## 🔗 Links
 
-- [🌐 NodeMaven Dashboard](https://dashboard.nodemaven.com/?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_dashboard)
-- [📖 API Documentation](https://dashboard.nodemaven.com/documentation/v2/swagger/?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_api_docs)
-- [💬 Support](https://dashboard.nodemaven.com/support/?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_support)
-- [🚀 Get Started](https://dashboard.nodemaven.com/register/?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_signup)
+- [🌐 NodeMaven Dashboard](https://dashboard.nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_dashboard)
+- [📖 API Documentation](https://dashboard.nodemaven.com/documentation/v2/swagger?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_api_docs)
+- [💬 Support](https://dashboard.nodemaven.com/support?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_support)
+- [🚀 Get Started](https://dashboard.nodemaven.com/register?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_signup)
 
 ---
 
-**Need help?** Contact our support team at [support@nodemaven.com](mailto:support@nodemaven.com) or visit our [documentation](https://dashboard.nodemaven.com/documentation/?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_help). 
+**Need help?** Contact our support team at [@node_maven](https://t.me/node_maven) or visit our [documentation](https://dashboard.nodemaven.com/documentation?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_help). 
