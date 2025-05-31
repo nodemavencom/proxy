@@ -138,18 +138,6 @@ Host: gate.nodemaven.com
 Port: 8080 (HTTP) or 1080 (SOCKS5)
 ```
 
-**Example URLs:**
-```
-# Residential Canada (sticky)
-socks5://aa101d91571b74-country-ca-ipv4-true-sid-abc123-filter-medium:aa101d91571b74@gate.nodemaven.com:1080
-
-# Mobile US (rotating)
-socks5://aa101d91571b74-country-us-type-mobile-ipv4-true-filter-medium:aa101d91571b74@gate.nodemaven.com:1080
-
-# HTTP with targeting
-http://aa101d91571b74-country-gb-city-london-ipv4-true-filter-medium:aa101d91571b74@gate.nodemaven.com:8080
-```
-
 ## 🛠️ Advanced Features
 
 ### Session Management
