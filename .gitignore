@@ -137,14 +137,16 @@ dmypy.json
 credentials.json
 config.json
 
-# Test and debug files
+# Test and debug files (but keep main quick_test.py)
 test_*.py
-*_test.py
 debug_*.py
-*_debug.py
-quick_test_*.py
+simple_*.py
+working_*.py
 temp_*.py
 experimental_*.py
+# Exclude test files but keep the main quick_test.py
+*_test.py
+!quick_test.py
 
 # Development artifacts
 .vscode/

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Setup script for NodeMaven API client.
+Setup script for NodeMaven Python SDK
 """
 
 from setuptools import setup, find_packages
@@ -8,38 +8,34 @@ import os
 
 # Read the README file
 def read_readme():
-    here = os.path.abspath(os.path.dirname(__file__))
-    readme_path = os.path.join(here, 'README.md')
-    
+    readme_path = os.path.join(os.path.dirname(__file__), 'README.md')
     if os.path.exists(readme_path):
         with open(readme_path, 'r', encoding='utf-8') as f:
             return f.read()
-    return "NodeMaven API Client - Professional Residential & Mobile Proxy API Client"
+    return "NodeMaven Python SDK for residential and mobile proxies"
 
 # Read requirements
 def read_requirements():
-    here = os.path.abspath(os.path.dirname(__file__))
-    requirements_path = os.path.join(here, 'requirements.txt')
-    
+    requirements_path = os.path.join(os.path.dirname(__file__), 'requirements.txt')
     if os.path.exists(requirements_path):
         with open(requirements_path, 'r', encoding='utf-8') as f:
             return [line.strip() for line in f if line.strip() and not line.startswith('#')]
     return []
 
 setup(
-    name="nodemaven-api-client",
+    name="nodemaven",
     version="1.0.0",
     author="NodeMaven Team",
     author_email="support@nodemaven.com",
-    description="Professional Residential & Mobile Proxy API Client",
+    description="Professional Proxy API - Residential & Mobile Proxies",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/nodemaven-api-client",
+    url="https://github.com/nodemavencom/proxy",
     project_urls={
-        "Bug Tracker": "https://github.com/yourusername/nodemaven-api-client/issues",
-        "Documentation": "https://dashboard.nodemaven.com/documentation/v2/swagger/",
-        "Homepage": "https://nodemaven.com",
-        "Source Code": "https://github.com/yourusername/nodemaven-api-client",
+        "Bug Tracker": "https://github.com/nodemavencom/proxy/issues",
+        "Documentation": "https://dashboard.nodemaven.com/documentation",
+        "Dashboard": "https://dashboard.nodemaven.com",
+        "Support": "https://t.me/node_maven",
     },
     packages=find_packages(),
     classifiers=[
@@ -57,39 +53,24 @@ setup(
         "Topic :: Internet :: Proxy Servers",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: System :: Networking",
     ],
     python_requires=">=3.7",
     install_requires=read_requirements(),
     extras_require={
         "dev": [
-            "pytest>=7.0.0",
-            "pytest-cov>=4.0.0",
-            "black>=22.0.0",
-            "isort>=5.10.0",
-            "flake8>=4.0.0",
-            "mypy>=0.950",
-        ],
-        "async": [
-            "aiohttp>=3.8.0",
-            "httpx>=0.24.0",
-        ],
-        "socks": [
-            "PySocks>=1.7.1",
+            "pytest>=6.0",
+            "pytest-cov>=2.0",
+            "black>=21.0",
+            "flake8>=3.8",
+            "mypy>=0.800",
         ],
     },
-    keywords=[
-        "proxy", "residential-proxy", "mobile-proxy", "socks5", "http-proxy",
-        "web-scraping", "api-client", "nodemaven", "ip-rotation", "geo-targeting"
-    ],
     entry_points={
         "console_scripts": [
-            "nodemaven-test=examples.basic_usage:main",
+            "nodemaven-test=nodemaven.quick_test:main",
         ],
     },
     include_package_data=True,
-    package_data={
-        "nodemaven": ["py.typed"],
-    },
     zip_safe=False,
+    keywords="proxy, residential, mobile, api, web-scraping, geo-targeting",
 ) 
