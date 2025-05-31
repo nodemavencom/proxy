@@ -22,19 +22,71 @@
 - ⚡ **99.9% Uptime** - Enterprise-grade infrastructure and reliability
 - 📊 **Real-time Analytics** - Monitor usage, performance, and success rates
 
-## 🚀 Quick Start (30 seconds!)
+## 🚀 Quick Start (5 minutes!)
 
-### 1. Get Your API Key 
+### Step 1: Get Your API Key 🔑
 1. **Sign up**: [NodeMaven Dashboard](https://dashboard.nodemaven.com/accounts/signup?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=signup_link)
 2. **Get API key**: [Profile → API Keys](https://dashboard.nodemaven.com/profile?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=api_key)
 
-### 2. Choose Your Language
+### Step 2: Setup Environment 📁
+
+```bash
+# Clone or download this repository
+git clone https://github.com/nodemavencom/proxy.git
+cd proxy
+
+# Copy environment template
+cp env.example .env
+
+# Edit .env file and add your API key:
+# NODEMAVEN_APIKEY = "your_api_key_here"
+```
+
+### Step 3: Choose Your Language & Setup
 
 #### 🐍 **Python (Ready to Use!)**
+
+**For macOS/Linux:**
 ```bash
 cd python/
-pip install requests python-dotenv  # Optional dependencies
-python quick_test.py                # Instant test!
+
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment
+source venv/bin/activate
+
+# Install dependencies
+pip install requests python-dotenv
+
+# Test your setup
+python quick_test.py
+```
+
+**For Windows:**
+```bash
+cd python/
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+venv\Scripts\activate
+
+# Install dependencies
+pip install requests python-dotenv
+
+# Test your setup
+python quick_test.py
+```
+
+**If something goes wrong:**
+```bash
+# Delete virtual environment and start over
+rm -rf venv  # (macOS/Linux)
+rmdir /s venv  # (Windows)
+
+# Then repeat the steps above
 ```
 
 #### 🟨 **JavaScript (Coming Soon)**
@@ -55,123 +107,63 @@ cd go/
 go get github.com/nodemaven/sdk
 ```
 
-### 3. Set Your Credentials
-```bash
-# Copy example environment file
-cp env.example .env
-
-# Edit with your credentials:
-NODEMAVEN_APIKEY = "your_api_key_here"
-NODEMAVEN_USERNAME = "your_username_here" 
-NODEMAVEN_PASSWORD = "your_password_here"
-```
-
-### 4. Test Your Connection
-```bash
-# Python
-cd python && python quick_test.py
-
-# Or run advanced examples
-python examples/proxy_rotation.py    # Full rotation demo
-python examples/basic_usage.py       # Simple usage patterns
-```
-
-## 📁 Repository Structure & File Guide
-
-```
-nodemaven/
-├── 🐍 python/                    # ✅ READY - Full Python SDK
-│   ├── 📦 nodemaven/             # Core SDK package
-│   │   ├── client.py             # Main API client class
-│   │   ├── utils.py              # Proxy configuration utilities
-│   │   ├── exceptions.py         # Custom exception classes
-│   │   └── __init__.py           # Package initialization
-│   ├── 📚 examples/              # Working examples
-│   │   ├── proxy_rotation.py     # 🔥 Advanced rotation demo
-│   │   ├── basic_usage.py        # Simple getting started guide
-│   │   ├── proxy_examples.py     # Common usage patterns
-│   │   └── README.md             # Examples documentation
-│   ├── quick_test.py             # 🚀 Instant setup test
-│   ├── setup.py                  # PyPI package setup
-│   ├── requirements.txt          # Python dependencies
-│   └── README.md                 # Python SDK documentation
-│
-├── 🟨 javascript/                # 🚧 COMING SOON
-│   └── README.md                 # JavaScript roadmap
-│
-├── 🟣 php/                       # 🚧 COMING SOON  
-│   └── README.md                 # PHP roadmap
-│
-├── 🔵 go/                        # 🚧 COMING SOON
-│   └── README.md                 # Go roadmap
-│
-├── 🛠️ tools/                     # Utilities & Location Database
-│   ├── update_locations.py       # Download location database
-│   └── locations.json            # 164 countries, 6,811+ cities
-│
-├── 🎨 assets/                    # Images & Resources (empty)
-├── 📚 docs/                      # Documentation (empty)
-├── env.example                   # Environment template
-├── .gitignore                    # Git ignore rules
-├── LICENSE                       # MIT License
-└── readme.md                     # 📖 This file
-
-Note: Create `.env` from `env.example` with your credentials
-```
-
-## 🔧 Key Components Explained
-
-### 📦 **Python SDK (`python/`)**
-**Status**: ✅ **Production Ready**
-
-| File | Purpose | What It Does |
-|------|---------|--------------|
-| `client.py` | Core API Client | Handles authentication, API calls, user management |
-| `utils.py` | Proxy Configuration | Creates proxy URLs, handles geo-targeting |
-| `exceptions.py` | Error Handling | Custom exceptions for API errors |
-| `quick_test.py` | **🚀 Instant Test** | **Test your setup in 30 seconds** |
-| `requirements.txt` | Dependencies | Optional packages (requests, python-dotenv) |
-
-### 📚 **Examples (`python/examples/`)**
-
-| Example | Demonstrates | Best For |
-|---------|-------------|----------|
-| **`proxy_rotation.py`** | **🔥 Advanced Features** | **IP rotation, sticky sessions, geo-targeting** |
-| `basic_usage.py` | Simple Usage | Getting started, basic requests |
-| `proxy_examples.py` | Common Patterns | Real-world usage scenarios |
-
-### 🛠️ **Tools (`tools/`)**
-
-| Tool | Purpose | Usage |
-|------|---------|-------|
-| `update_locations.py` | Location Database | Download 164 countries, 6,811+ cities |
-| `locations.json` | Location Data | Offline lookup for targeting |
+### Step 4: Test Your Connection ✅
 
 ```bash
-# Download latest location data
-cd tools/
-python update_locations.py
+# Make sure you're in the python/ directory with activated virtual environment
+cd python/
+source venv/bin/activate  # (macOS/Linux) or venv\Scripts\activate (Windows)
 
-# Show statistics  
-python update_locations.py info
-
-# Search locations
-python update_locations.py search "los angeles"
+# Run the quick test
+python quick_test.py
 ```
 
-## 💡 Usage Examples
+**Expected output:**
+```
+🚀 NodeMaven Quick Test Starting...
+✅ API Key found: eyJhbGciOiJIUzI1NiIs...
+✅ Connected! User: your@email.com
+✅ Proxy credentials obtained!
+✅ Proxy working! Your IP: 192.168.1.100
+🎉 Quick Test Complete!
+```
+
+## 🎉 You're Ready! Next Steps
+
+### Run Examples
+```bash
+# Basic usage patterns
+python examples/basic_usage.py
+
+# Advanced IP rotation and geo-targeting
+python examples/proxy_rotation.py
+
+# Common usage scenarios
+python examples/proxy_examples.py
+```
+
+### Use in Your Code
+```python
+from nodemaven.utils import get_proxy_config
+import requests
+
+# Simple proxy usage (auto-gets credentials from API)
+proxies = get_proxy_config(country="US")
+response = requests.get("http://httpbin.org/ip", proxies=proxies)
+print(f"Your proxy IP: {response.json()['origin']}")
+```
+
+## 💡 Key Features & Examples
 
 ### 🔄 **IP Rotation**
 ```python
-from nodemaven import NodeMavenClient
 from nodemaven.utils import get_proxy_config
-
-client = NodeMavenClient()
+import requests
 
 # Different IP for each request
 for i in range(5):
     proxies = get_proxy_config(country="US")
-    response = requests.get("https://httpbin.org/ip", proxies=proxies)
+    response = requests.get("http://httpbin.org/ip", proxies=proxies)
     print(f"Request {i+1}: {response.json()['origin']}")
 ```
 
@@ -183,7 +175,7 @@ proxies = get_proxy_config(session=session_id)
 
 # All requests use same IP
 for i in range(3):
-    response = requests.get("https://httpbin.org/ip", proxies=proxies)
+    response = requests.get("http://httpbin.org/ip", proxies=proxies)
     print(f"Request {i+1}: {response.json()['origin']}")  # Same IP!
 ```
 
@@ -204,7 +196,7 @@ nyc_proxies = get_proxy_config(country="US", region="new york", city="new york")
 from nodemaven.utils import get_socks5_proxy
 
 socks_proxies = get_socks5_proxy(country="CA")
-response = requests.get("https://httpbin.org/ip", proxies=socks_proxies)
+response = requests.get("http://httpbin.org/ip", proxies=socks_proxies)
 ```
 
 ## 🎯 Use Cases
@@ -218,42 +210,96 @@ response = requests.get("https://httpbin.org/ip", proxies=socks_proxies)
 | **SEO Research** | Localized search results | `country="CA", city="toronto"` |
 | **Market Research** | Geographic analysis | `country="FR", region="paris"` |
 
-## 🔧 Environment Configuration
+## 📁 Repository Structure
 
-### Required Variables
-```bash
-NODEMAVEN_APIKEY = "your_api_key_here"      # From dashboard
-NODEMAVEN_USERNAME = "your_username_here"    # Proxy username  
-NODEMAVEN_PASSWORD = "your_password_here"    # Proxy password
+```
+nodemaven/
+├── 🐍 python/                    # ✅ READY - Full Python SDK
+│   ├── 📦 nodemaven/             # Core SDK package
+│   │   ├── client.py             # Main API client class
+│   │   ├── utils.py              # Proxy configuration utilities
+│   │   ├── exceptions.py         # Custom exception classes
+│   │   └── __init__.py           # Package initialization
+│   ├── 📚 examples/              # Working examples
+│   │   ├── proxy_rotation.py     # 🔥 Advanced rotation demo
+│   │   ├── basic_usage.py        # Simple getting started guide
+│   │   ├── proxy_examples.py     # Common usage patterns
+│   │   └── README.md             # Examples documentation
+│   ├── quick_test.py             # 🚀 Instant setup test
+│   ├── setup.py                  # PyPI package setup
+│   ├── requirements.txt          # Python dependencies
+│   └── README.md                 # Python SDK documentation
+│
+├── 🟨 javascript/                # 🚧 COMING SOON
+├── 🟣 php/                       # 🚧 COMING SOON  
+├── 🔵 go/                        # 🚧 COMING SOON
+├── 🛠️ tools/                     # Utilities & Location Database
+├── env.example                   # Environment template
+├── .gitignore                    # Git ignore rules
+├── LICENSE                       # MIT License
+└── readme.md                     # 📖 This file
 ```
 
-### Optional Variables
+## 🔧 Configuration
+
+### Required Configuration
 ```bash
-NODEMAVEN_BASE_URL = "https://api.nodemaven.com"     # API endpoint
-NODEMAVEN_PROXY_HOST = "gate.nodemaven.com"          # Proxy host
-NODEMAVEN_HTTP_PORT = "8080"                         # HTTP port
-NODEMAVEN_SOCKS5_PORT = "1080"                       # SOCKS5 port
-REQUEST_TIMEOUT = "30"                               # Request timeout
+# Only one variable needed in .env file:
+NODEMAVEN_APIKEY = "your_api_key_here"
 ```
 
-## 📊 Testing & Verification
+**That's it!** The SDK automatically:
+- ✅ Fetches your proxy username/password from the API
+- ✅ Configures proxy endpoints and ports
+- ✅ Handles authentication and targeting
 
-### 🚀 **Quick Test**
+### Optional Configuration
 ```bash
-cd python/
-python quick_test.py    # Tests API connection + proxy
+# Advanced users only (usually not needed):
+# NODEMAVEN_BASE_URL = "https://api.nodemaven.com"
+# NODEMAVEN_PROXY_HOST = "gate.nodemaven.com"
+# NODEMAVEN_HTTP_PORT = "8080"
+# NODEMAVEN_SOCKS5_PORT = "1080"
+# REQUEST_TIMEOUT = "30"
 ```
 
-### 🔥 **Advanced Demo**
+## 🚨 Troubleshooting
+
+### Common Issues
+
+| Issue | Solution |
+|-------|----------|
+| `No API key found` | Set `NODEMAVEN_APIKEY` in `.env` file |
+| `Could not get proxy credentials` | Check API key validity in dashboard |
+| `Import Error` | Activate virtual environment: `source venv/bin/activate` |
+| `Module not found` | Install dependencies: `pip install requests python-dotenv` |
+| `Permission denied` | Make sure virtual environment is activated |
+
+### Virtual Environment Issues
+
+**If virtual environment doesn't work:**
 ```bash
-python examples/proxy_rotation.py    # Full feature demonstration
+# Delete and recreate
+rm -rf venv  # (macOS/Linux) or rmdir /s venv (Windows)
+python3 -m venv venv  # (macOS/Linux) or python -m venv venv (Windows)
+source venv/bin/activate  # (macOS/Linux) or venv\Scripts\activate (Windows)
+pip install requests python-dotenv
 ```
 
-### 📦 **Package Installation**
+**Check if virtual environment is active:**
 ```bash
-cd python/
-pip install -e .        # Install as development package
+which python  # Should show path with 'venv' in it
 ```
+
+## 💰 Pricing
+
+| Plan | Price | Traffic | Features |
+|------|-------|---------|----------|
+| **Starter** | $50/month | 5GB | Basic targeting, HTTP/SOCKS5 |
+| **Professional** | $200/month | 25GB | Advanced targeting, Analytics |
+| **Enterprise** | Custom | Unlimited | Dedicated IPs, Priority support |
+
+[View Full Pricing](https://nodemaven.com/pricing?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=pricing_table) • [Start Free Trial](https://dashboard.nodemaven.com/register/?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=free_trial)
 
 ## 📚 Documentation & Resources
 
@@ -264,36 +310,6 @@ pip install -e .        # Install as development package
 | 💬 **Support** | 24/7 developer support | [Get Help](https://t.me/node_maven) |
 | 🐛 **Issues** | Report bugs | [GitHub Issues](https://github.com/nodemavencom/proxy/issues) |
 
-## 💰 Pricing (prices may vary)
-
-| Plan | Price | Traffic | Features |
-|------|-------|---------|----------|
-| **Starter** | $50/month | 5GB | Basic targeting, HTTP/SOCKS5 |
-| **Professional** | $200/month | 25GB | Advanced targeting, Analytics |
-| **Enterprise** | Custom | Unlimited | Dedicated IPs, Priority support |
-
-[View Full Pricing](https://nodemaven.com/pricing?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=pricing_table) • [Start Free Trial](https://dashboard.nodemaven.com/register/?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=free_trial)
-
-## 🌟 Advanced Features
-
-### Targeting Options
-- **Country**: 164+ countries available
-- **Region**: 1,455+ regions for precise targeting  
-- **City**: 6,811+ cities worldwide
-- **ISP**: 63,726+ internet service providers
-- **Session**: Sticky sessions for consistent IPs
-
-### Protocols
-- **HTTP/HTTPS**: Standard web proxy protocol
-- **SOCKS5**: Full TCP/UDP proxy support  
-- **Authentication**: Username/password and IP whitelist
-
-### Management
-- **Sub-users**: Create and manage multiple proxy users
-- **IP Whitelist**: Secure access control
-- **Real-time Stats**: Monitor usage and performance
-- **API Access**: Full programmatic control
-
 ## 🤝 Contributing
 
 We welcome contributions! Here's how you can help:
@@ -303,24 +319,6 @@ We welcome contributions! Here's how you can help:
 3. **Enhance Documentation**: Better guides and explanations
 4. **Report Issues**: Found a bug? [Create an issue](https://github.com/nodemavencom/proxy/issues)
 5. **Feature Requests**: Suggest new features or improvements
-
-## 🚨 Troubleshooting
-
-### Common Issues
-
-| Issue | Solution |
-|-------|----------|
-| `No API key found` | Set `NODEMAVEN_APIKEY` in `.env` file |
-| `Could not get proxy credentials` | Check API key validity in dashboard |
-| `Proxy connection failed` | Verify username/password are correct |
-| `403 Forbidden` | API key expired or invalid |
-| `503 Service Unavailable` | Temporary network issue, retry |
-
-### Getting Help
-
-1. **Check your credentials** in the [dashboard](https://dashboard.nodemaven.com/profile/)
-2. **Run quick test**: `python quick_test.py`
-3. **Check API status**: [Status Page](https://status.nodemaven.com)
 
 ## 📞 Support
 
