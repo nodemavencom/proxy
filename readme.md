@@ -121,10 +121,10 @@ python quick_test.py
 **Expected output:**
 ```
 🚀 NodeMaven Quick Test Starting...
-✅ API Key found: eyJhbGciOiJIUzI1NiIs...
+✅ API Key found: your_api_key_here...
 ✅ Connected! User: your@email.com
 ✅ Proxy credentials obtained!
-✅ Proxy working! Your IP: 192.168.1.100
+✅ Proxy working! Your IP: xxx.xxx.xxx.xxx
 🎉 Quick Test Complete!
 ```
 
@@ -144,43 +144,45 @@ python examples/proxy_examples.py
 
 ### Use in Your Code
 ```python
-from nodemaven.utils import get_proxy_config
-import requests
+from nodemaven.utils import get_proxy_config, get_current_ip
 
 # Simple proxy usage (auto-gets credentials from API)
 proxies = get_proxy_config(country="US")
-response = requests.get("http://httpbin.org/ip", proxies=proxies)
-print(f"Your proxy IP: {response.json()['origin']}")
+ip = get_current_ip(proxies=proxies)
+print(f"Your proxy IP: {ip}")
 ```
 
 ## 💡 Key Features & Examples
 
 ### 🔄 **IP Rotation**
 ```python
-from nodemaven.utils import get_proxy_config
-import requests
+from nodemaven.utils import get_proxy_config, get_current_ip
 
 # Different IP for each request
 for i in range(5):
     proxies = get_proxy_config(country="US")
-    response = requests.get("http://httpbin.org/ip", proxies=proxies)
-    print(f"Request {i+1}: {response.json()['origin']}")
+    ip = get_current_ip(proxies=proxies)
+    print(f"Request {i+1}: {ip}")
 ```
 
 ### 📌 **Sticky Sessions**
 ```python
+from nodemaven.utils import get_proxy_config, get_current_ip
+
 # Same IP for multiple requests
 session_id = "my_session_123"
 proxies = get_proxy_config(session=session_id)
 
 # All requests use same IP
 for i in range(3):
-    response = requests.get("http://httpbin.org/ip", proxies=proxies)
-    print(f"Request {i+1}: {response.json()['origin']}")  # Same IP!
+    ip = get_current_ip(proxies=proxies)
+    print(f"Request {i+1}: {ip}")  # Same IP!
 ```
 
 ### 🌍 **Geo-Targeting**
 ```python
+from nodemaven.utils import get_proxy_config
+
 # Target specific countries
 us_proxies = get_proxy_config(country="US")
 uk_proxies = get_proxy_config(country="GB") 
@@ -193,10 +195,11 @@ nyc_proxies = get_proxy_config(country="US", region="new york", city="new york")
 
 ### 🔒 **SOCKS5 Support**
 ```python
-from nodemaven.utils import get_socks5_proxy
+from nodemaven.utils import get_socks5_proxy, get_current_ip
 
-socks_proxies = get_socks5_proxy(country="CA")
-response = requests.get("http://httpbin.org/ip", proxies=socks_proxies)
+socks_proxies = {'http': get_socks5_proxy(country="CA"), 'https': get_socks5_proxy(country="CA")}
+ip = get_current_ip(proxies=socks_proxies)
+print(f"Your IP: {ip}")
 ```
 
 ## 🎯 Use Cases

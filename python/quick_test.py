@@ -1,54 +1,72 @@
 #!/usr/bin/env python3
 """
-NodeMaven Quick Test Script
-Tests API connection and proxy functionality in 30 seconds!
+Quick test script for NodeMaven proxy functionality.
+Tests API connection, proxy credentials, and basic proxy functionality.
 """
 
 import os
 import sys
-import requests
-from dotenv import load_dotenv
 
 # Add the current directory to Python path for imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 try:
-    from nodemaven import NodeMavenClient
-    from nodemaven.utils import get_proxy_config, get_correct_proxy_credentials
+    from nodemaven.client import NodeMavenClient
+    from nodemaven.utils import get_proxy_config, format_bytes, get_current_ip
     from nodemaven.exceptions import NodeMavenAPIError
 except ImportError as e:
     print(f"❌ Import Error: {e}")
     print("💡 Make sure you're in the python/ directory and have the nodemaven package")
     sys.exit(1)
 
+
+def test_proxy_connection(description: str, proxy_config: dict) -> bool:
+    """Test proxy connection and return success status."""
+    try:
+        # Test proxy connection using our IP checker
+        proxy_ip = get_current_ip(proxies=proxy_config, timeout=15)
+        
+        if proxy_ip:
+            print(f"✅ {description} working! IP: {proxy_ip}")
+            return True
+        else:
+            print(f"❌ {description} failed to get IP")
+            return False
+            
+    except Exception as e:
+        print(f"❌ {description} error: {str(e)[:50]}...")
+        return False
+
+
 def main():
-    """Run quick test of NodeMaven API and proxy functionality"""
-    
+    """Main test function."""
     print("🚀 NodeMaven Quick Test Starting...")
     print("=" * 50)
     
-    # Load environment variables
-    load_dotenv(dotenv_path="../.env")
-    
-    # Check for API key
-    api_key = os.getenv("NODEMAVEN_APIKEY")
-    if not api_key:
-        print("❌ No API key found!")
-        print("💡 Make sure NODEMAVEN_APIKEY is set in your .env file")
-        return False
-    
-    print(f"✅ API Key found: {api_key[:20]}...")
-    
     try:
-        # Test 1: Initialize client and get user info
+        # Check for API key
+        from nodemaven.utils import get_api_key
+        api_key = get_api_key()
+        
+        if not api_key:
+            print("❌ No API key found!")
+            print("💡 Make sure NODEMAVEN_APIKEY is set in your .env file")
+            return
+        
+        print(f"✅ API Key found: {api_key[:20]}...")
+        
+        # Test API connection
         print("\n📡 Testing API Connection...")
         client = NodeMavenClient()
         user_info = client.get_user_info()
-        print(f"✅ Connected! User: {user_info.get('username', 'Unknown')}")
         
-        # Test 2: Get proxy credentials
+        user_display = user_info.get('email', 'Unknown')
+        print(f"✅ Connected! User: {user_display}")
+        
+        # Get proxy credentials
         print("\n🔑 Getting Proxy Credentials...")
-        username, password = get_correct_proxy_credentials()
+        username = user_info.get('proxy_username')
+        password = user_info.get('proxy_password')
         
         if username and password:
             print(f"✅ Proxy credentials obtained!")
@@ -57,59 +75,45 @@ def main():
         else:
             print("❌ Could not get proxy credentials")
             print("💡 Check if your account has proxy access enabled")
-            return False
+            return
         
-        # Test 3: Test proxy connection
+        # Test basic proxy connection
         print("\n🌐 Testing Proxy Connection...")
-        
-        # Get proxy configuration
         proxy_config = get_proxy_config(country="US")
-        print(f"✅ Proxy config created: {list(proxy_config.keys())}")
         
-        # Test the proxy with a simple request
-        test_url = "https://httpbin.org/ip"
-        print(f"📡 Making request to {test_url}...")
-        
-        response = requests.get(
-            test_url, 
-            proxies=proxy_config,
-            timeout=30
-        )
-        
-        if response.status_code == 200:
-            ip_info = response.json()
-            print(f"✅ Proxy working! Your IP: {ip_info.get('origin', 'Unknown')}")
-        else:
-            print(f"❌ Proxy request failed with status: {response.status_code}")
-            return False
+        if proxy_config:
+            print(f"✅ Proxy config created: {list(proxy_config.keys())}")
             
-        # Test 4: Test different country
-        print("\n🌍 Testing Geo-targeting (UK)...")
-        uk_proxy_config = get_proxy_config(country="GB")
+            # Test US proxy
+            success = test_proxy_connection("US Proxy", proxy_config)
+            
+            if not success:
+                print("❌ Proxy connection test failed")
+                print("💡 This could be due to:")
+                print("   • Network connectivity issues")
+                print("   • Proxy server temporary issues")
+                print("   • Account limitations")
+                return
+            
+            # Test geo-targeting with UK
+            print("\n🌍 Testing Geo-targeting (UK)...")
+            uk_proxy_config = get_proxy_config(country="GB")
+            uk_success = test_proxy_connection("UK Proxy", uk_proxy_config)
+            
+            if not uk_success:
+                print("⚠️  UK proxy test failed, but US proxy worked")
         
-        response = requests.get(
-            test_url,
-            proxies=uk_proxy_config,
-            timeout=30
-        )
-        
-        if response.status_code == 200:
-            ip_info = response.json()
-            print(f"✅ UK Proxy working! IP: {ip_info.get('origin', 'Unknown')}")
-        else:
-            print(f"⚠️  UK proxy test failed with status: {response.status_code}")
-        
-        # Test 5: Show account info
+        # Show account information
         print("\n📊 Account Information:")
-        if 'traffic_used' in user_info:
-            from nodemaven.utils import format_bytes
-            traffic_used = user_info.get('traffic_used', 0)
-            traffic_limit = user_info.get('traffic_limit', 0)
+        
+        traffic_used = user_info.get('traffic_used', 0)
+        traffic_limit = user_info.get('traffic_limit', 0)
+        
+        if traffic_used and traffic_limit:
             print(f"   Traffic Used: {format_bytes(traffic_used)}")
-            if traffic_limit > 0:
-                print(f"   Traffic Limit: {format_bytes(traffic_limit)}")
-                remaining = traffic_limit - traffic_used
-                print(f"   Remaining: {format_bytes(remaining)}")
+            print(f"   Traffic Limit: {format_bytes(traffic_limit)}")
+            remaining = max(0, traffic_limit - traffic_used)
+            print(f"   Remaining: {format_bytes(remaining)}")
         
         print("\n" + "=" * 50)
         print("🎉 Quick Test Complete!")
@@ -123,24 +127,21 @@ def main():
         print("   • API Docs: https://dashboard.nodemaven.com/documentation")
         print("   • Support: https://t.me/node_maven")
         
-        return True
-        
     except NodeMavenAPIError as e:
         print(f"❌ NodeMaven API Error: {e}")
-        if hasattr(e, 'status_code'):
-            if e.status_code == 401:
-                print("💡 Your API key may be invalid or expired")
-            elif e.status_code == 403:
-                print("💡 Your account may not have proxy access enabled")
-        return False
-    except requests.exceptions.RequestException as e:
-        print(f"❌ Network Error: {e}")
-        print("💡 Check your internet connection and try again")
-        return False
+        
+        if "401" in str(e) or "403" in str(e):
+            print("💡 Your API key may be invalid or expired")
+        elif "account" in str(e).lower():
+            print("💡 Your account may not have proxy access enabled")
+        
     except Exception as e:
-        print(f"❌ Unexpected Error: {e}")
-        return False
+        if "requests" in str(e).lower() or "connection" in str(e).lower():
+            print(f"❌ Network Error: {e}")
+            print("💡 Check your internet connection and try again")
+        else:
+            print(f"❌ Unexpected Error: {e}")
+
 
 if __name__ == "__main__":
-    success = main()
-    sys.exit(0 if success else 1) 
+    main() 

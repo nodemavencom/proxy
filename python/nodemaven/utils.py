@@ -99,7 +99,7 @@ def get_correct_proxy_credentials() -> tuple:
 
 def get_base_url() -> str:
     """Get base API URL from environment or default."""
-    return os.getenv('NODEMAVEN_BASE_URL', 'https://api.nodemaven.com')
+    return os.getenv('NODEMAVEN_BASE_URL', 'https://dashboard.nodemaven.com')
 
 
 def get_proxy_host() -> str:
@@ -186,14 +186,14 @@ def validate_date_format(date_string: str) -> bool:
 
 def generate_session_id() -> str:
     """Generate a random session ID."""
-    return str(uuid.uuid4()).replace('-', '')[:16]
+    return str(uuid.uuid4()).replace('-', '')[:13]  # Match website format (13 chars)
 
 
 def build_proxy_username(base_username: str, **targeting) -> str:
     """
     Build NodeMaven proxy username with targeting parameters.
     
-    Format: base_username-country-ca-ipv4-true-sid-sessionid-filter-medium
+    Format matches website exactly: base_username-country-dz-region-algiers-city-algiers-ipv4-true-sid-5b2c3f96e3a94-filter-medium
     """
     parts = [base_username]
     
@@ -201,34 +201,39 @@ def build_proxy_username(base_username: str, **targeting) -> str:
     if 'country' in targeting and targeting['country']:
         parts.extend(['country', targeting['country'].lower()])
     
-    # Region targeting
+    # Region targeting  
     if 'region' in targeting and targeting['region']:
-        parts.extend(['region', targeting['region'].lower().replace(' ', '_')])
+        # Convert spaces to nothing and make lowercase (like website)
+        region = targeting['region'].lower().replace(' ', '').replace('_', '')
+        parts.extend(['region', region])
     
     # City targeting
     if 'city' in targeting and targeting['city']:
-        parts.extend(['city', targeting['city'].lower().replace(' ', '_')])
+        # Convert spaces to nothing and make lowercase (like website)
+        city = targeting['city'].lower().replace(' ', '').replace('_', '')
+        parts.extend(['city', city])
     
     # ISP targeting
     if 'isp' in targeting and targeting['isp']:
-        parts.extend(['isp', targeting['isp'].lower().replace(' ', '_')])
+        isp = targeting['isp'].lower().replace(' ', '').replace('_', '')
+        parts.extend(['isp', isp])
     
     # Connection type (mobile, residential)
     if 'type' in targeting and targeting['type']:
         parts.extend(['type', targeting['type'].lower()])
     
-    # IP version (default to ipv4)
+    # IP version (always add ipv4-true to match website format)
     ipv4_only = targeting.get('ipv4', True)
     parts.extend(['ipv4', 'true' if ipv4_only else 'false'])
     
-    # Session ID for sticky sessions
+    # Session ID for sticky sessions (always add if session provided or sticky=True)
     if 'session' in targeting and targeting['session']:
         parts.extend(['sid', str(targeting['session'])])
     elif targeting.get('sticky', False):
         # Generate random session ID for sticky sessions
         parts.extend(['sid', generate_session_id()])
     
-    # IP filter quality
+    # IP filter quality (always add to match website format)
     ip_filter = targeting.get('filter', 'medium')
     parts.extend(['filter', ip_filter])
     
@@ -240,8 +245,8 @@ def build_proxy_url(protocol: str = 'http', **targeting) -> str:
     Build complete proxy URL for NodeMaven using correct API credentials.
     
     Examples:
-    - socks5://username-country-ca-filter-medium:password@gate.nodemaven.com:1080
-    - http://username-country-us-region-alabama-city-birmingham-type-mobile-filter-medium:password@gate.nodemaven.com:8080
+    - HTTP: http://username-country-us-ipv4-true-filter-medium:password@gate.nodemaven.com:8080
+    - SOCKS5: socks5://username-country-us-ipv4-true-filter-medium:password@gate.nodemaven.com:1080
     """
     # Get correct credentials from API
     base_username, password = get_correct_proxy_credentials()
@@ -250,7 +255,7 @@ def build_proxy_url(protocol: str = 'http', **targeting) -> str:
     if not base_username or not password:
         raise ValueError("Could not get proxy credentials. Please check your API key and connection.")
     
-    # Build complex username with targeting
+    # Build complex username with targeting (matching website format exactly)
     proxy_username = build_proxy_username(base_username, **targeting)
     
     # Get port based on protocol
@@ -321,4 +326,105 @@ def parse_error_message(response_data: Dict[str, Any]) -> str:
         else:
             return str(errors)
     else:
-        return "Unknown error occurred" 
+        return "Unknown error occurred"
+
+
+def get_current_ip(proxies: Optional[Dict[str, str]] = None, timeout: int = 10) -> Optional[str]:
+    """
+    Get current public IP address using reliable endpoints.
+    
+    Args:
+        proxies: Optional proxy configuration for requests
+        timeout: Request timeout in seconds
+    
+    Returns:
+        IP address string or None if failed
+    """
+    # Try to import requests, fall back to urllib if not available
+    try:
+        import requests
+        HAS_REQUESTS = True
+    except ImportError:
+        import urllib.request
+        import urllib.error
+        HAS_REQUESTS = False
+    
+    # Reliable IP checking endpoints
+    endpoints = [
+        "https://api.ipify.org",
+        "https://checkip.amazonaws.com",
+        "https://ipecho.net/plain",
+        "https://myexternalip.com/raw"
+    ]
+    
+    for endpoint in endpoints:
+        try:
+            if HAS_REQUESTS:
+                response = requests.get(endpoint, proxies=proxies, timeout=timeout)
+                if response.status_code == 200:
+                    return response.text.strip()
+            else:
+                # Use urllib as fallback
+                req = urllib.request.Request(endpoint)
+                with urllib.request.urlopen(req, timeout=timeout) as response:
+                    if response.status == 200:
+                        return response.read().decode('utf-8').strip()
+        except Exception:
+            continue
+    
+    return None
+
+
+def check_ip_with_details(ip_address: Optional[str] = None, proxies: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
+    """
+    Check IP address with detailed information using free APIs.
+    
+    Args:
+        ip_address: IP to check (if None, checks current IP)
+        proxies: Optional proxy configuration for requests
+    
+    Returns:
+        Dictionary with IP details or error information
+    """
+    try:
+        import requests
+        HAS_REQUESTS = True
+    except ImportError:
+        HAS_REQUESTS = False
+    
+    if not ip_address:
+        ip_address = get_current_ip(proxies=proxies)
+        if not ip_address:
+            return {"error": "Could not determine IP address"}
+    
+    if not HAS_REQUESTS:
+        return {
+            "ip": ip_address,
+            "error": "requests library not available for detailed IP checking"
+        }
+    
+    # Use ip-api.com for detailed information (free, no key needed)
+    try:
+        url = f"http://ip-api.com/json/{ip_address}?fields=66846719"
+        response = requests.get(url, proxies=proxies, timeout=10)
+        
+        if response.status_code == 200:
+            data = response.json()
+            if data.get("status") == "success":
+                return {
+                    "ip": ip_address,
+                    "country": data.get("country"),
+                    "country_code": data.get("countryCode"),
+                    "region": data.get("regionName"),
+                    "city": data.get("city"),
+                    "isp": data.get("isp"),
+                    "org": data.get("org"),
+                    "proxy": data.get("proxy", False),
+                    "hosting": data.get("hosting", False),
+                    "mobile": data.get("mobile", False)
+                }
+    except Exception as e:
+        pass
+    
+    # Fallback to basic IP only
+    return {"ip": ip_address} 
