@@ -6,6 +6,7 @@ Demonstrates core functionality including user info, countries, and proxy usage.
 
 import os
 import sys
+from typing import Optional
 
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -20,7 +21,7 @@ except ImportError as e:
     sys.exit(1)
 
 
-def test_proxy_connection(description: str, proxy_config: dict) -> str:
+def test_proxy_connection(description: str, proxy_config: dict) -> Optional[str]:
     """Test proxy connection and return IP address."""
     try:
         # Use our IP checking function
