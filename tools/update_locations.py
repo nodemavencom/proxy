@@ -254,9 +254,9 @@ def main():
     if success:
         print("\n🎉 Locations update completed successfully!")
         print("\n💡 Usage examples:")
-        print("   python scripts/update_locations.py search US")
-        print("   python scripts/update_locations.py search california")
-        print("   python scripts/update_locations.py info")
+        print("   python tools/update_locations.py search US")
+        print("   python tools/update_locations.py search california")
+        print("   python tools/update_locations.py info")
     else:
         print("\n❌ Locations update failed!")
         sys.exit(1)
