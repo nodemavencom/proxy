@@ -1,192 +1,142 @@
-# NodeMaven Python SDK 🐍
+# NodeMaven Python Tools 🐍
 
-[![Python](https://img.shields.io/badge/Python-3.7%2B-blue?style=for-the-badge&logo=python)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](../LICENSE)
-[![API](https://img.shields.io/badge/API-v2-orange?style=for-the-badge)](https://dashboard.nodemaven.com/documentation/v2/swagger?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_api_docs)
+Python client library and tools for NodeMaven proxy services with built-in IP checking utilities.
 
-> **Professional Python client for NodeMaven's residential and mobile proxy API** - Global coverage, advanced targeting, and enterprise-grade reliability.
+## 📁 Contents
 
-## 🚀 Quick Start
+- **`nodemaven/`** - Python SDK for NodeMaven proxy API
+- **`ip_checker/`** - Standalone IP geolocation checkers
+- **`ip_checker.py`** - Enhanced IP checker with merged service data
+- **`examples/`** - Usage examples and demos
+- **`tests/`** - Simple test files for all functionality
+- **`tools/`** - Location data management utilities
+- **`quick_test.py`** - Quick proxy testing script
 
-### Installation
+## 🚀 Quick Setup
+
+### 1. Create Virtual Environment
 
 ```bash
-# Clone the repository
-git clone https://github.com/nodemavencom/proxy.git
+# Navigate to python directory
 cd proxy/python
 
-# Install dependencies (optional - works without requests)
-pip install -r requirements.txt
+# Create virtual environment
+python -m venv venv
 
-# Set up environment variables
-cp ../env.example .env
-# Edit .env with your credentials
+# Activate virtual environment
+# Windows:
+venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
 ```
 
-### Environment Setup
-
-Create a `.env` file with your NodeMaven credentials:
+### 2. Install Dependencies
 
 ```bash
-NODEMAVEN_APIKEY = "your_api_key_here"
-NODEMAVEN_USERNAME = "your_username_here"
-NODEMAVEN_PASSWORD = "your_password_here"
-
-# Optional settings
-NODEMAVEN_BASE_URL = "https://api.nodemaven.com"
-NODEMAVEN_PROXY_HOST = "gate.nodemaven.com"
-NODEMAVEN_HTTP_PORT = "8080"
-NODEMAVEN_SOCKS5_PORT = "1080"
-REQUEST_TIMEOUT = "30"
+pip install -r requirements.txt
 ```
 
-### Basic Usage
+### 3. Environment Configuration
+
+```bash
+# Copy environment template
+cp env.example .env
+
+# Edit .env with your NodeMaven credentials
+# NODEMAVEN_APIKEY=your_api_key_here
+```
+
+## 🔧 Available Tools
+
+### NodeMaven API Client
 
 ```python
 from nodemaven import NodeMavenClient
-from nodemaven.utils import get_proxy_config, get_socks5_proxy
 
 # Initialize client
 client = NodeMavenClient()
 
-# Get user information
+# Get user info
 user_info = client.get_user_info()
-print(f"Email: {user_info['email']}")
 print(f"Data remaining: {user_info['data']} bytes")
 
-# Get available countries
-countries = client.get_countries(limit=10)
-for country in countries['results']:
-    print(f"{country['name']} ({country['code']}) - {country['availability']}")
-```
-
-## 🌐 Proxy Usage
-
-### HTTP/HTTPS Proxies
-
-```python
+# Get proxy configuration
 from nodemaven.utils import get_proxy_config
-import requests
-
-# Basic country targeting
-proxies = get_proxy_config(country="us")
-
-# Advanced targeting
-proxies = get_proxy_config(
-    country="gb",
-    city="london", 
-    session="my_session_123",
-    filter="high"
-)
-
-# Make request through proxy
-response = requests.get('https://httpbin.org/ip', proxies=proxies)
-print(f"Your IP: {response.json()['origin']}")
+proxies = get_proxy_config(country="us", city="new_york")
 ```
 
-## 🎯 Targeting Options
-
-| Parameter | Description | Example Values |
-|-----------|-------------|----------------|
-| `country` | 2-letter country code | `us`, `gb`, `ca`, `de` |
-| `region` | Region/state name | `california`, `texas`, `alabama` |
-| `city` | City name | `new_york`, `london`, `birmingham` |
-| `isp` | ISP name | `verizon`, `comcast`, `bt` |
-| `type` | Connection type | `mobile`, `residential` |
-| `session` | Custom session ID | `my_session_123` |
-| `sticky` | Auto sticky session | `True`, `False` |
-| `filter` | IP quality filter | `low`, `medium`, `high` |
-| `ipv4` | IPv4 only | `True` (default), `False` |
-
-## 🔧 API Methods
-
-### User Management
-```python
-# Get user information
-user_info = client.get_user_info()
-
-# Check data usage
-print(f"Data used: {user_info['data']} bytes")
-print(f"Proxy username: {user_info['proxy_username']}")
-print(f"Proxy password: {user_info['proxy_password']}")
-```
-
-### Location Data
-```python
-# Get countries
-countries = client.get_countries(limit=50)
-
-# Get regions for a country
-regions = client.get_regions(country_code='us', limit=20)
-
-# Get cities in a region
-cities = client.get_cities(country_code='us', region_code='california')
-
-# Get ISPs in a location
-isps = client.get_isps(country_code='us', city_code='new_york')
-```
-
-## 📊 Proxy URL Format
-
-NodeMaven uses a complex username format for targeting:
-
-```
-Protocol: http:// or socks5://
-Username: base_username-country-ca-ipv4-true-sid-session123-filter-medium
-Password: base_password
-Host: gate.nodemaven.com
-Port: 8080 (HTTP) or 1080 (SOCKS5)
-```
-
-## 🛠️ Advanced Features
-
-### Session Management
-```python
-# Sticky sessions for consistent IP
-proxy_url = get_socks5_proxy(country="us", session="my_session_1")
-
-# Auto-generate session ID
-proxy_url = get_socks5_proxy(country="us", sticky=True)
-```
-
-### Connection Types
-```python
-# Residential proxies (default)
-proxy_url = get_socks5_proxy(country="us")
-
-# Mobile proxies
-proxy_url = get_socks5_proxy(country="us", type="mobile")
-```
-
-### IP Quality Filtering
-```python
-# High quality IPs
-proxy_url = get_socks5_proxy(country="us", filter="high")
-
-# Medium quality (default)
-proxy_url = get_socks5_proxy(country="us", filter="medium")
-
-# Low cost option
-proxy_url = get_socks5_proxy(country="us", filter="low")
-```
-
-## 🧪 Running Tests
-
-The project uses `pytest` for unit tests. Install the development
-dependencies and run the test suite from the repository root:
+### IP Checker Tools
 
 ```bash
-pip install -e ./python[dev]
-pytest
+# Check current IP with merged data from multiple services
+python ip_checker.py
+
+# Check specific IP
+python ip_checker.py 8.8.8.8
+
+# Use individual checkers
+python ip_checker/ipapi_checker.py 1.1.1.1
+python ip_checker/ipinfo_checker.py 1.1.1.1
 ```
 
-## 🔗 Links
+### Quick Proxy Test
 
-- [🌐 NodeMaven Dashboard](https://dashboard.nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_dashboard)
-- [📖 API Documentation](https://dashboard.nodemaven.com/documentation/v2/swagger?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_api_docs)
-- [💬 Support](https://dashboard.nodemaven.com/support?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_support)
-- [🚀 Get Started](https://dashboard.nodemaven.com/register?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_signup)
+```bash
+# Test proxy functionality
+python quick_test.py
+```
+
+### Location Data Tools
+
+```bash
+# Update location database from NodeMaven API
+python tools/update_locations.py
+
+# Location data is cached in tools/locations.json
+```
+
+## 📚 Examples
+
+Check the `examples/` folder for comprehensive usage examples:
+
+- **`basic_usage.py`** - Simple proxy usage
+- **`proxy_examples.py`** - Advanced proxy configurations  
+- **`proxy_rotation.py`** - IP rotation techniques
+
+```bash
+# Run examples
+python examples/basic_usage.py
+python examples/proxy_examples.py
+```
+
+## 🎯 Key Features
+
+### NodeMaven SDK
+- ✅ Residential & mobile proxy access
+- ✅ Global country/city targeting
+- ✅ Session management 
+- ✅ ISP filtering
+- ✅ Auto-rotation & sticky sessions
+
+### IP Checking
+- ✅ Multiple free API sources (IP-API, IPInfo)
+- ✅ Intelligent data merging
+- ✅ Clean JSON output
+- ✅ Proxy detection
+- ✅ Geolocation data
+
+## 🔗 API Documentation
+
+- [NodeMaven Website](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_readme)
+- [API Documentation](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_api_docs)
+- [Support](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_support)
+
+## 📋 Requirements
+
+- Python 3.7+
+- requests, python-dotenv, pydantic
+- NodeMaven API key (for proxy features)
 
 ---
 
-**Need help?** Contact our support team at [@node_maven](https://t.me/node_maven) or visit our [documentation](https://dashboard.nodemaven.com/documentation?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_help). 
+**Quick Start:** `python ip_checker.py` to test IP checking or see `examples/` for proxy usage.

@@ -52,7 +52,7 @@ We'd love your contribution! Here's how you can help:
 ## 📞 Stay Updated
 
 - 📧 **Email**: [support@nodemaven.com](mailto:support@nodemaven.com)
-- 💬 **Live Chat**: [Dashboard Support](https://dashboard.nodemaven.com/support/?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=javascript_support)
+- 💬 **Live Chat**: [NodeMaven Support](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=javascript_support)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/nodemaven/nodemaven/issues)
 
 ## 🐍 Available Now: Python SDK
@@ -63,6 +63,6 @@ While you wait for the JavaScript SDK, check out our fully-featured [Python SDK]
 
 <div align="center">
 
-**[🚀 Get Started with Python](../python/)** • **[📖 API Docs](https://dashboard.nodemaven.com/documentation/?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=javascript_docs)** • **[💬 Request Features](https://github.com/nodemaven/nodemaven/issues)**
+**[🚀 Get Started with Python](../python/)** • **[📖 API Docs](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=javascript_docs)** • **[💬 Request Features](https://github.com/nodemaven/nodemaven/issues)**
 
 </div> 

@@ -134,7 +134,7 @@ for i in range(3):
 
 ## 🔗 Resources
 
-- 📖 [API Documentation](https://dashboard.nodemaven.com/documentation)
-- 🎯 [Dashboard](https://dashboard.nodemaven.com)
+- 📖 [API Documentation](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_examples)
+- 🎯 [NodeMaven Website](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_examples_dashboard)
 - 💬 [Support](https://t.me/node_maven)
 - 🐛 [Issues](https://github.com/nodemavencom/proxy/issues) 
