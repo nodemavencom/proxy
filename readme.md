@@ -1,6 +1,6 @@
 # NodeMaven - Professional Proxy API 🚀
 
-[![Python](https://img.shields.io/badge/Python-3.7%2B%20✅%20TESTED-brightgreen?style=for-the-badge&logo=python)](https://github.com/nodemavencom/proxy/tree/main/python)
+[![Python](https://img.shields.io/badge/Python-3.8%2B%20✅%20TESTED-brightgreen?style=for-the-badge&logo=python)](https://github.com/nodemavencom/proxy/tree/main/python)
 [![JavaScript](https://img.shields.io/badge/JavaScript-Coming%20Soon-yellow?style=for-the-badge&logo=javascript)](https://github.com/nodemavencom/proxy/issues)
 [![PHP](https://img.shields.io/badge/PHP-Coming%20Soon-purple?style=for-the-badge&logo=php)](https://github.com/nodemavencom/proxy/issues)
 [![Go](https://img.shields.io/badge/Go-Coming%20Soon-cyan?style=for-the-badge&logo=go)](https://github.com/nodemavencom/proxy/issues)
