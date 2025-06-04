@@ -170,6 +170,16 @@ proxy_url = get_socks5_proxy(country="us", filter="medium")
 proxy_url = get_socks5_proxy(country="us", filter="low")
 ```
 
+## 🧪 Running Tests
+
+The project uses `pytest` for unit tests. Install the development
+dependencies and run the test suite from the repository root:
+
+```bash
+pip install -e ./python[dev]
+pytest
+```
+
 ## 🔗 Links
 
 - [🌐 NodeMaven Dashboard](https://dashboard.nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_dashboard)
