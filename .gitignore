@@ -143,14 +143,15 @@ last_ip_check.json
 ip_results.json
 
 # Test and debug files (but keep main quick_test.py)
-test_*.py
-debug_*.py
-simple_*.py
-working_*.py
-temp_*.py
-experimental_*.py
-# Exclude test files but keep the main quick_test.py
-*_test.py
+# The SDK now includes unit tests
+#!test_*.py
+#!debug_*.py
+#!simple_*.py
+#!working_*.py
+#!temp_*.py
+#!experimental_*.py
+# *_test.py files are now tracked
+#!*_test.py
 !quick_test.py
 
 # Development artifacts
