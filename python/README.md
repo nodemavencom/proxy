@@ -12,8 +12,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/nodemaven/nodemaven.git
-cd nodemaven/python
+git clone https://github.com/nodemavencom/proxy.git
+cd proxy/python
 
 # Install dependencies (optional - works without requests)
 pip install -r requirements.txt
@@ -168,6 +168,16 @@ proxy_url = get_socks5_proxy(country="us", filter="medium")
 
 # Low cost option
 proxy_url = get_socks5_proxy(country="us", filter="low")
+```
+
+## 🧪 Running Tests
+
+The project uses `pytest` for unit tests. Install the development
+dependencies and run the test suite from the repository root:
+
+```bash
+pip install -e ./python[dev]
+pytest
 ```
 
 ## 🔗 Links

@@ -4,6 +4,9 @@ Quick test script for NodeMaven proxy functionality.
 Tests API connection, proxy credentials, and basic proxy functionality.
 """
 
+# Prevent pytest from treating this script as a test module
+__test__ = False
+
 import os
 import sys
 

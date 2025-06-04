@@ -38,6 +38,7 @@ setup(
         "Support": "https://t.me/node_maven",
     },
     packages=find_packages(),
+    py_modules=["quick_test"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
@@ -67,7 +68,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "nodemaven-test=nodemaven.quick_test:main",
+            "nodemaven-test=quick_test:main",
         ],
     },
     include_package_data=True,
