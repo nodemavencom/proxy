@@ -12,8 +12,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/nodemaven/nodemaven.git
-cd nodemaven/python
+git clone https://github.com/nodemavencom/proxy.git
+cd proxy/python
 
 # Install dependencies (optional - works without requests)
 pip install -r requirements.txt
