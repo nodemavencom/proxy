@@ -175,13 +175,18 @@ def validate_proxy_password(password: str) -> bool:
     return bool(re.match(pattern, password))
 
 
-def validate_date_format(date_string: str) -> bool:
-    """Validate date format (dd-mm-yyyy)."""
+def validate_date_format(date_string: str) -> None:
+    """Validate date string in ``dd-mm-yyyy`` format.
+
+    Raises:
+        ValueError: If the date string does not match the expected format.
+    """
     try:
-        datetime.strptime(date_string, '%d-%m-%Y')
-        return True
-    except ValueError:
-        return False
+        datetime.strptime(date_string, "%d-%m-%Y")
+    except ValueError as exc:
+        raise ValueError(
+            f"Invalid date format for '{date_string}'. Expected dd-mm-yyyy"
+        ) from exc
 
 
 def generate_session_id() -> str:
