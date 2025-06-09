@@ -139,11 +139,18 @@ python examples/proxy_examples.py
 | `REQUEST_TIMEOUT` | Request timeout (seconds) | `30` |
 | `DEBUG` | Enable debug mode | `false` |
 
-## 🔗 API Documentation
+## 🤝 Support & Community
 
-- [NodeMaven Website](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_readme)
-- [API Documentation](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_api_docs)
-- [Support](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_support)
+- 📧 **Email**: [support@nodemaven.com](mailto:support@nodemaven.com)
+- 💬 **Live Chat**: [NodeMaven Dashboard](https://dashboard.nodemaven.com?utm_source=github&utm_medium=python_readme&utm_campaign=developer_outreach&utm_content=support_chat)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/nodemavencom/proxy/issues)
+- 📖 **API Docs**: [Documentation](https://dashboard.nodemaven.com/documentation?utm_source=github&utm_medium=python_readme&utm_campaign=developer_outreach&utm_content=api_docs)
+
+## 🔗 Other SDKs
+
+- 🟢 **[JavaScript SDK](../javascript/)** - Zero-dependency Node.js implementation
+- 🟣 **[PHP SDK](../php/)** - Modern PHP 8.0+ implementation
+- 🔷 **[Go SDK](../go/)** - High-performance Go implementation
 
 ## 📋 Requirements
 
@@ -153,4 +160,10 @@ python examples/proxy_examples.py
 
 ---
 
-**Quick Start:** `python ip_checker.py` to test IP checking or see `examples/` for proxy usage.
+<div align="center">
+
+**[🚀 Get Started](https://dashboard.nodemaven.com?utm_source=github&utm_medium=python_readme&utm_campaign=developer_outreach&utm_content=footer_cta)** • **[📖 Full Documentation](https://dashboard.nodemaven.com/documentation?utm_source=github&utm_medium=python_readme&utm_campaign=developer_outreach&utm_content=footer_docs)** • **[💬 Support](https://dashboard.nodemaven.com?utm_source=github&utm_medium=python_readme&utm_campaign=developer_outreach&utm_content=footer_support)**
+
+Made with ❤️ by the NodeMaven Team
+
+</div>

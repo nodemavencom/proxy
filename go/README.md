@@ -224,17 +224,25 @@ if err != nil {
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
+## 🤝 Support & Community
 
-- 📖 **Documentation**: [NodeMaven Docs](https://dashboard.nodemaven.com/documentation)
+- 📖 **Documentation**: [NodeMaven Docs](https://dashboard.nodemaven.com/documentation?utm_source=github&utm_medium=go_readme&utm_campaign=developer_outreach&utm_content=api_docs)
 - 💬 **Telegram**: [@node_maven](https://t.me/node_maven)
-- 📧 **Email**: Support via [NodeMaven Dashboard](https://dashboard.nodemaven.com)
+- 📧 **Email**: Support via [NodeMaven Dashboard](https://dashboard.nodemaven.com?utm_source=github&utm_medium=go_readme&utm_campaign=developer_outreach&utm_content=support_chat)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/nodemavencom/proxy/issues)
 
-## Links
+## 🔗 Other SDKs
 
-- [NodeMaven Website](https://nodemaven.com)
-- [Dashboard](https://dashboard.nodemaven.com)
-- [API Documentation](https://dashboard.nodemaven.com/documentation)
-- [Python SDK](https://github.com/nodemavencom/proxy/tree/main/python)
-- [JavaScript SDK](https://github.com/nodemavencom/proxy/tree/main/javascript) 
+- 🐍 **[Python SDK](../python/)** - Full-featured Python implementation  
+- 🟢 **[JavaScript SDK](../javascript/)** - Zero-dependency Node.js implementation
+- 🟣 **[PHP SDK](../php/)** - Modern PHP 8.0+ implementation
+
+---
+
+<div align="center">
+
+**[🚀 Get Started](https://dashboard.nodemaven.com?utm_source=github&utm_medium=go_readme&utm_campaign=developer_outreach&utm_content=footer_cta)** • **[📖 Full Documentation](https://dashboard.nodemaven.com/documentation?utm_source=github&utm_medium=go_readme&utm_campaign=developer_outreach&utm_content=footer_docs)** • **[💬 Support](https://dashboard.nodemaven.com?utm_source=github&utm_medium=go_readme&utm_campaign=developer_outreach&utm_content=footer_support)**
+
+Made with ❤️ by the NodeMaven Team
+
+</div> 

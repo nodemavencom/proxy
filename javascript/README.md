@@ -167,19 +167,20 @@ const response = await axios.get('https://httpbin.org/ip', {
 ## 🤝 Support & Community
 
 - 📧 **Email**: [support@nodemaven.com](mailto:support@nodemaven.com)
-- 💬 **Live Chat**: [NodeMaven Dashboard](https://dashboard.nodemaven.com)
+- 💬 **Live Chat**: [NodeMaven Dashboard](https://dashboard.nodemaven.com?utm_source=github&utm_medium=javascript_readme&utm_campaign=developer_outreach&utm_content=support_chat)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/nodemavencom/proxy/issues)
-- 📖 **API Docs**: [Documentation](https://dashboard.nodemaven.com/documentation)
+- 📖 **API Docs**: [Documentation](https://dashboard.nodemaven.com/documentation?utm_source=github&utm_medium=javascript_readme&utm_campaign=developer_outreach&utm_content=api_docs)
 
 ## 🔗 Other SDKs
 
 - 🐍 **[Python SDK](../python/)** - Full-featured Python implementation  
+- 🟣 **[PHP SDK](../php/)** - Modern PHP 8.0+ implementation
 - 🔷 **[Go SDK](../go/)** - High-performance Go implementation
 
 ---
 
 <div align="center">
 
-**[🚀 Get Started](https://dashboard.nodemaven.com)** • **[📖 Full Documentation](https://dashboard.nodemaven.com/documentation)** • **[💬 Support](https://dashboard.nodemaven.com)**
+**[🚀 Get Started](https://dashboard.nodemaven.com?utm_source=github&utm_medium=javascript_readme&utm_campaign=developer_outreach&utm_content=footer_cta)** • **[📖 Full Documentation](https://dashboard.nodemaven.com/documentation?utm_source=github&utm_medium=javascript_readme&utm_campaign=developer_outreach&utm_content=footer_docs)** • **[💬 Support](https://dashboard.nodemaven.com?utm_source=github&utm_medium=javascript_readme&utm_campaign=developer_outreach&utm_content=footer_support)**
 
 </div> 
