@@ -1,0 +1,21 @@
+{
+  "name": "@nodemaven/sdk",
+  "version": "1.0.0",
+  "description": "Professional Proxy API - Residential & Mobile Proxies",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "dev": "node examples/basic_usage.js"
+  },
+  "keywords": ["proxy", "residential", "mobile", "api", "web-scraping"],
+  "author": "NodeMaven Team <support@nodemaven.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+} 

@@ -1,25 +1,25 @@
-# NodeMaven JavaScript SDK 🟨
+# NodeMaven JavaScript SDK 🟢
 
-[![JavaScript](https://img.shields.io/badge/JavaScript-Coming%20Soon-yellow?style=for-the-badge&logo=javascript)](https://github.com/nodemaven/nodemaven/issues)
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
-[![npm](https://img.shields.io/badge/npm-Coming%20Soon-red?style=for-the-badge)](https://www.npmjs.com/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-Ready-green?style=for-the-badge&logo=javascript)](https://github.com/nodemavencom/proxy)
+[![Node.js](https://img.shields.io/badge/Node.js-16%2B-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
+[![npm](https://img.shields.io/badge/npm-Available-green?style=for-the-badge)](https://www.npmjs.com/)
 
-> **JavaScript/Node.js SDK for NodeMaven Proxy API** - Coming Soon!
+> **Professional JavaScript/Node.js SDK for NodeMaven Proxy API**
 
-## 🚧 Under Development
+## ✅ Production Ready
 
-We're working hard to bring you a comprehensive JavaScript SDK for NodeMaven. This will include:
+A comprehensive JavaScript SDK for NodeMaven's residential and mobile proxy service. Get started in minutes!
 
-### 🎯 Planned Features
-- **Node.js Support** - Full server-side implementation
-- **Browser Support** - Client-side proxy configuration
+### 🎯 Features
+- **Node.js Support** - Full server-side implementation with native modules
+- **Zero Dependencies** - Lightweight and fast, no external dependencies
 - **TypeScript** - Full type definitions included
 - **Modern Syntax** - ES6+ with async/await
-- **Zero Dependencies** - Lightweight and fast
+- **Error Handling** - Comprehensive error types and handling
 
-### 📦 Expected API
+### 🚀 Quick Start
 ```javascript
-import { NodeMavenClient } from '@nodemaven/sdk';
+const { NodeMavenClient } = require('@nodemaven/sdk');
 
 const client = new NodeMavenClient({
   apiKey: 'your_api_key_here'
@@ -35,34 +35,151 @@ countries.results.forEach(country => {
   console.log(`${country.name} (${country.code})`);
 });
 
-// Use with axios or fetch
-const proxy = client.getProxyConfig({ country: 'US', city: 'new_york' });
-const response = await fetch('https://httpbin.org/ip', { proxy });
+// Get proxy configuration
+const proxyConfig = await client.getProxyConfig({ 
+  country: 'US', 
+  city: 'new_york' 
+});
+console.log(`Proxy: ${proxyConfig.host}:${proxyConfig.http_port}`);
 ```
 
-## 🤝 Want to Help?
+## 📦 Installation
 
-We'd love your contribution! Here's how you can help:
+```bash
+npm install @nodemaven/sdk
+```
 
-1. **⭐ Star this repo** to show interest
-2. **💬 Join the discussion** in [GitHub Issues](https://github.com/nodemaven/nodemaven/issues)
-3. **🔧 Contribute code** - we welcome pull requests!
-4. **📝 Share feedback** on what features you need most
+## 🔧 Setup
 
-## 📞 Stay Updated
+### Environment Variables (Recommended)
+```bash
+export NODEMAVEN_APIKEY="your-api-key-here"
+```
+
+### Or Configuration Object
+```javascript
+const client = new NodeMavenClient({
+  apiKey: 'your-api-key-here'
+});
+```
+
+## 📖 Documentation
+
+### Core Methods
+
+#### `getUserInfo()`
+Get account information and proxy credentials:
+```javascript
+const userInfo = await client.getUserInfo();
+console.log(`Traffic used: ${userInfo.traffic_used} MB`);
+```
+
+#### `getCountries(options)`
+List available countries:
+```javascript
+const countries = await client.getCountries({ limit: 10 });
+countries.results.forEach(country => {
+  console.log(`${country.name} (${country.code})`);
+});
+```
+
+#### `getRegions(options)` & `getCities(options)`
+Get regions and cities for geo-targeting:
+```javascript
+const regions = await client.getRegions({ countryCode: 'US' });
+const cities = await client.getCities({ countryCode: 'US', regionCode: 'CA' });
+```
+
+#### `getProxyConfig(options)`
+Generate proxy configuration:
+```javascript
+const proxyConfig = await client.getProxyConfig({
+  country: 'US',
+  city: 'new_york'
+});
+```
+
+#### `getSocks5ProxyUrl(options)`
+Get SOCKS5 proxy URL:
+```javascript
+const proxyUrl = await client.getSocks5ProxyUrl({ country: 'UK' });
+// Returns: socks5://username:password@gate.nodemaven.com:1080
+```
+
+### Error Handling
+```javascript
+const { 
+  NodeMavenClient, 
+  AuthenticationError, 
+  RateLimitError 
+} = require('@nodemaven/sdk');
+
+try {
+  const client = new NodeMavenClient();
+  const userInfo = await client.getUserInfo();
+} catch (error) {
+  if (error instanceof AuthenticationError) {
+    console.error('Invalid API key');
+  } else if (error instanceof RateLimitError) {
+    console.error('Rate limit exceeded');
+  }
+}
+```
+
+## 🛠️ Examples
+
+See the [`examples/`](./examples/) directory for comprehensive usage examples:
+
+- **[Basic Usage](./examples/basic_usage.js)** - Core functionality and setup
+- **[Proxy Integration](./examples/proxy_integration.js)** - Real-world proxy usage patterns
+
+```bash
+# Run examples
+node examples/basic_usage.js
+node examples/proxy_integration.js
+```
+
+## 🌐 Integration with HTTP Libraries
+
+### Native http/https modules
+```javascript
+const proxyConfig = await client.getProxyConfig({ country: 'US' });
+// Use proxyConfig.host, proxyConfig.http_port, etc.
+```
+
+### With Axios
+```javascript
+const axios = require('axios');
+const proxyConfig = await client.getProxyConfig({ country: 'US' });
+
+const response = await axios.get('https://httpbin.org/ip', {
+  proxy: {
+    host: proxyConfig.host,
+    port: proxyConfig.http_port,
+    auth: {
+      username: proxyConfig.username,
+      password: proxyConfig.password
+    }
+  }
+});
+```
+
+## 🤝 Support & Community
 
 - 📧 **Email**: [support@nodemaven.com](mailto:support@nodemaven.com)
-- 💬 **Live Chat**: [NodeMaven Support](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=javascript_support)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/nodemaven/nodemaven/issues)
+- 💬 **Live Chat**: [NodeMaven Dashboard](https://dashboard.nodemaven.com)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/nodemavencom/proxy/issues)
+- 📖 **API Docs**: [Documentation](https://dashboard.nodemaven.com/documentation)
 
-## 🐍 Available Now: Python SDK
+## 🔗 Other SDKs
 
-While you wait for the JavaScript SDK, check out our fully-featured [Python SDK](../python/) that's ready to use today!
+- 🐍 **[Python SDK](../python/)** - Full-featured Python implementation  
+- 🔷 **[Go SDK](../go/)** - High-performance Go implementation
 
 ---
 
 <div align="center">
 
-**[🚀 Get Started with Python](../python/)** • **[📖 API Docs](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=javascript_docs)** • **[💬 Request Features](https://github.com/nodemaven/nodemaven/issues)**
+**[🚀 Get Started](https://dashboard.nodemaven.com)** • **[📖 Full Documentation](https://dashboard.nodemaven.com/documentation)** • **[💬 Support](https://dashboard.nodemaven.com)**
 
 </div> 
