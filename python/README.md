@@ -125,6 +125,20 @@ python examples/proxy_examples.py
 - ✅ Proxy detection
 - ✅ Geolocation data
 
+## ⚙️ Configuration Options
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `NODEMAVEN_APIKEY` | Your API key (required) | - |
+| `NODEMAVEN_BASE_URL` | API base URL | `https://dashboard.nodemaven.com` |
+| `NODEMAVEN_PROXY_HOST` | Proxy host | `gate.nodemaven.com` |
+| `NODEMAVEN_HTTP_PORT` | HTTP proxy port | `8080` |
+| `NODEMAVEN_SOCKS5_PORT` | SOCKS5 proxy port | `1080` |
+| `REQUEST_TIMEOUT` | Request timeout (seconds) | `30` |
+| `DEBUG` | Enable debug mode | `false` |
+
 ## 🔗 API Documentation
 
 - [NodeMaven Website](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=python_readme)

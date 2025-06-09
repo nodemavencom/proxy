@@ -1,23 +1,43 @@
-# NodeMaven Go SDK 🔵
+# NodeMaven Go SDK
 
-[![Go](https://img.shields.io/badge/Go-Coming%20Soon-cyan?style=for-the-badge&logo=go)](https://github.com/nodemaven/nodemaven/issues)
-[![Go Modules](https://img.shields.io/badge/Go%20Modules-Ready-green?style=for-the-badge)](https://golang.org/ref/mod)
-[![pkg.go.dev](https://img.shields.io/badge/pkg.go.dev-Coming%20Soon-blue?style=for-the-badge)](https://pkg.go.dev/)
+A comprehensive Go client library for [NodeMaven](https://nodemaven.com) - high-performance residential and mobile proxy service.
 
-> **Go SDK for NodeMaven Proxy API** - Coming Soon!
+[![Go Reference](https://pkg.go.dev/badge/github.com/nodemavencom/proxy/go/nodemaven.svg)](https://pkg.go.dev/github.com/nodemavencom/proxy/go/nodemaven)
+[![Go Report Card](https://goreportcard.com/badge/github.com/nodemavencom/proxy/go)](https://goreportcard.com/report/github.com/nodemavencom/proxy/go)
 
-## 🚧 Under Development
+## Features
 
-We're crafting a high-performance Go SDK for NodeMaven with idiomatic Go patterns:
+- 🌍 **Global Proxy Network** - Access residential and mobile proxies from 100+ countries
+- 🎯 **Geo-targeting** - Target specific countries, regions, cities, and ISPs
+- 📌 **Sticky Sessions** - Maintain the same IP across multiple requests
+- ⚡ **High Performance** - Concurrent request support with connection pooling
+- 🔒 **Secure** - Built-in authentication and error handling
+- 📖 **Well Documented** - Comprehensive documentation and examples
 
-### 🎯 Planned Features
-- **Go 1.19+** - Modern Go with generics support
-- **Zero Dependencies** - Pure standard library implementation
-- **Context Support** - Proper context handling for cancellation
-- **Concurrent Safe** - Thread-safe client implementation
-- **HTTP/2 Support** - Modern HTTP protocol support
+## Installation
 
-### 📦 Expected API
+```bash
+go get github.com/nodemavencom/proxy/go/nodemaven
+```
+
+## Quick Start
+
+### 1. Get Your API Key
+
+Sign up at [NodeMaven Dashboard](https://dashboard.nodemaven.com) and get your API key.
+
+### 2. Set Environment Variable
+
+```bash
+# Windows
+set NODEMAVEN_APIKEY=your_api_key_here
+
+# Linux/macOS
+export NODEMAVEN_APIKEY=your_api_key_here
+```
+
+### 3. Basic Usage
+
 ```go
 package main
 
@@ -25,106 +45,196 @@ import (
     "context"
     "fmt"
     "log"
-    
-    "github.com/nodemaven/go-sdk"
+
+    "github.com/nodemavencom/proxy/go/nodemaven"
 )
 
 func main() {
-    client := nodemaven.NewClient(&nodemaven.Config{
-        APIKey: "your_api_key_here",
-    })
-    
-    ctx := context.Background()
-    
-    // Get user information
-    userInfo, err := client.GetUserInfo(ctx)
+    // Initialize client
+    client, err := nodemaven.NewClient(&nodemaven.Config{})
     if err != nil {
         log.Fatal(err)
     }
-    fmt.Printf("Username: %s\n", userInfo.ProxyUsername)
-    
-    // Get countries
-    countries, err := client.GetCountries(ctx, &nodemaven.CountriesRequest{
-        Limit: 10,
-    })
+
+    // Get basic proxy
+    proxy, err := client.GetProxyConfig(nil)
     if err != nil {
         log.Fatal(err)
     }
+
+    // Use proxy with HTTP client
+    httpClient := proxy.HTTPClient()
     
-    for _, country := range countries.Results {
-        fmt.Printf("%s (%s)\n", country.Name, country.Code)
-    }
-    
-    // Use with HTTP client
-    proxyConfig := client.GetProxyConfig(&nodemaven.ProxyOptions{
-        Country: "US",
-        City:    "new_york",
-    })
-    
-    httpClient := proxyConfig.HTTPClient()
+    // Make request through proxy
     resp, err := httpClient.Get("https://httpbin.org/ip")
     if err != nil {
         log.Fatal(err)
     }
     defer resp.Body.Close()
+
+    fmt.Println("Request successful through proxy!")
 }
 ```
 
-### 🔧 Advanced Usage
-```go
-// With context and timeout
-ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-defer cancel()
+## Advanced Usage
 
-// Concurrent requests
+### Geo-targeting
+
+```go
+// Target specific country
+proxy, err := client.GetProxyConfig(&nodemaven.ProxyOptions{
+    Country: "US",
+})
+
+// Target specific region and city
+proxy, err := client.GetProxyConfig(&nodemaven.ProxyOptions{
+    Country: "US",
+    Region:  "California",
+    City:    "San Francisco",
+})
+```
+
+### Sticky Sessions
+
+```go
+// Create sticky session
+sessionID := "my_session_" + nodemaven.GenerateSessionID()
+
+proxy, err := client.GetProxyConfig(&nodemaven.ProxyOptions{
+    Country: "US",
+    Session: sessionID,
+})
+
+// All requests with this proxy will use the same IP
+httpClient := proxy.HTTPClient()
+```
+
+### Concurrent Requests
+
+```go
+// Multiple concurrent requests with different sessions
 var wg sync.WaitGroup
 for i := 0; i < 10; i++ {
     wg.Add(1)
     go func(id int) {
         defer wg.Done()
         
-        proxy := client.GetProxyConfig(&nodemaven.ProxyOptions{
+        sessionID := fmt.Sprintf("worker_%d", id)
+        proxy, err := client.GetProxyConfig(&nodemaven.ProxyOptions{
             Country: "US",
-            Session: fmt.Sprintf("session_%d", id),
+            Session: sessionID,
         })
-        
-        // Make request with unique session
-        resp, err := proxy.HTTPClient().Get("https://httpbin.org/ip")
         if err != nil {
-            log.Printf("Request %d failed: %v", id, err)
             return
         }
-        defer resp.Body.Close()
         
-        fmt.Printf("Request %d completed\n", id)
+        httpClient := proxy.HTTPClient()
+        resp, err := httpClient.Get("https://httpbin.org/ip")
+        if err != nil {
+            return
+        }
+        resp.Body.Close()
+        
+        fmt.Printf("Worker %d completed\n", id)
     }(i)
 }
 wg.Wait()
 ```
 
-## 🤝 Want to Help?
+## Configuration Options
 
-We'd love your contribution! Here's how you can help:
+### Environment Variables
 
-1. **⭐ Star this repo** to show interest
-2. **💬 Join the discussion** in [GitHub Issues](https://github.com/nodemaven/nodemaven/issues)
-3. **🔧 Contribute code** - we welcome pull requests!
-4. **📝 Share feedback** on Go-specific features you need
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `NODEMAVEN_APIKEY` | Your API key (required) | - |
+| `NODEMAVEN_BASE_URL` | API base URL | `https://dashboard.nodemaven.com` |
+| `NODEMAVEN_PROXY_HOST` | Proxy host | `gate.nodemaven.com` |
+| `NODEMAVEN_HTTP_PORT` | HTTP proxy port | `8080` |
+| `NODEMAVEN_SOCKS5_PORT` | SOCKS5 proxy port | `1080` |
+| `REQUEST_TIMEOUT` | Request timeout (seconds) | `30` |
 
-## 📞 Stay Updated
+### Programmatic Configuration
 
-- 📧 **Email**: [support@nodemaven.com](mailto:support@nodemaven.com)
-- 💬 **Live Chat**: [NodeMaven Support](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=go_support)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/nodemaven/nodemaven/issues)
+```go
+client, err := nodemaven.NewClient(&nodemaven.Config{
+    APIKey:     "your_api_key",
+    BaseURL:    "https://dashboard.nodemaven.com",
+    ProxyHost:  "gate.nodemaven.com",
+    HTTPPort:   8080,
+    SOCKS5Port: 1080,
+    Timeout:    30 * time.Second,
+})
+```
 
-## 🐍 Available Now: Python SDK
+## API Reference
 
-While you wait for the Go SDK, check out our fully-featured [Python SDK](../python/) that's ready to use today!
+### Core Types
 
----
+- **`Client`** - Main client for API interactions
+- **`ProxyConfig`** - Proxy configuration with HTTP client
+- **`ProxyOptions`** - Targeting and session options
+- **`UserInfo`** - Account information and usage stats
 
-<div align="center">
+### Key Methods
 
-**[🚀 Get Started with Python](../python/)** • **[📖 API Docs](https://nodemaven.com?utm_source=github&utm_medium=github_post&utm_campaign=developer_outreach&utm_content=go_docs)** • **[💬 Request Features](https://github.com/nodemaven/nodemaven/issues)**
+- **`NewClient(config)`** - Create new client
+- **`GetUserInfo()`** - Get account information
+- **`GetProxyConfig(options)`** - Get HTTP proxy configuration
+- **`GetSOCKS5ProxyURL(options)`** - Get SOCKS5 proxy URL
+- **`GetCountries()`** - List available countries
+- **`GetRegions()`** - List available regions
 
-</div> 
+## Examples
+
+See the [examples](./examples/) directory for complete working examples:
+
+- **[basic_usage.go](./examples/basic_usage.go)** - Basic proxy usage and geo-targeting
+- **[concurrent_usage.go](./examples/concurrent_usage.go)** - Concurrent requests and sticky sessions
+
+## Error Handling
+
+The SDK provides specific error types for different scenarios:
+
+```go
+proxy, err := client.GetProxyConfig(options)
+if err != nil {
+    switch e := err.(type) {
+    case *nodemaven.AuthenticationError:
+        log.Fatal("Invalid API key")
+    case *nodemaven.RateLimitError:
+        log.Fatal("Rate limit exceeded")
+    case *nodemaven.ValidationError:
+        log.Fatal("Invalid parameters:", e.Message)
+    default:
+        log.Fatal("Unexpected error:", err)
+    }
+}
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+- 📖 **Documentation**: [NodeMaven Docs](https://dashboard.nodemaven.com/documentation)
+- 💬 **Telegram**: [@node_maven](https://t.me/node_maven)
+- 📧 **Email**: Support via [NodeMaven Dashboard](https://dashboard.nodemaven.com)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/nodemavencom/proxy/issues)
+
+## Links
+
+- [NodeMaven Website](https://nodemaven.com)
+- [Dashboard](https://dashboard.nodemaven.com)
+- [API Documentation](https://dashboard.nodemaven.com/documentation)
+- [Python SDK](https://github.com/nodemavencom/proxy/tree/main/python)
+- [JavaScript SDK](https://github.com/nodemavencom/proxy/tree/main/javascript) 
