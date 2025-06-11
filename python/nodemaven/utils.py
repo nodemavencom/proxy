@@ -194,11 +194,25 @@ def generate_session_id() -> str:
     return str(uuid.uuid4()).replace('-', '')[:13]  # Match website format (13 chars)
 
 
+def validate_ttl_format(ttl_string: str) -> bool:
+    """
+    Validate TTL format according to how-api-works.md specification.
+    
+    Valid formats: 60s, 1m, 5m, 1h, 24h
+    """
+    import re
+    pattern = r'^(\d+)(s|m|h)$'
+    return bool(re.match(pattern, ttl_string))
+
+
 def build_proxy_username(base_username: str, **targeting) -> str:
     """
     Build NodeMaven proxy username with targeting parameters.
     
-    Format matches website exactly: base_username-country-dz-region-algiers-city-algiers-ipv4-true-sid-5b2c3f96e3a94-filter-medium
+    Format matches how-api-works.md exactly with full TTL support.
+    Examples:
+    - aa101d91571b74-country-us-region-new_york-city-brooklyn
+    - aa101d91571b74-country-any-type-mobile-ipv4-true-sid-a49c071423294-ttl-24h-filter-medium
     """
     parts = [base_username]
     
@@ -208,39 +222,55 @@ def build_proxy_username(base_username: str, **targeting) -> str:
     
     # Region targeting  
     if 'region' in targeting and targeting['region']:
-        # Convert spaces to nothing and make lowercase (like website)
-        region = targeting['region'].lower().replace(' ', '').replace('_', '')
+        # Preserve underscores, only replace spaces with underscores (per how-api-works.md)
+        region = targeting['region'].lower().replace(' ', '_')
         parts.extend(['region', region])
     
     # City targeting
     if 'city' in targeting and targeting['city']:
-        # Convert spaces to nothing and make lowercase (like website)
-        city = targeting['city'].lower().replace(' ', '').replace('_', '')
+        # Preserve underscores, only replace spaces with underscores 
+        city = targeting['city'].lower().replace(' ', '_')
         parts.extend(['city', city])
     
     # ISP targeting
     if 'isp' in targeting and targeting['isp']:
-        isp = targeting['isp'].lower().replace(' ', '').replace('_', '')
+        # For ISP, replace spaces and keep underscores
+        isp = targeting['isp'].lower().replace(' ', '_')
         parts.extend(['isp', isp])
     
     # Connection type (mobile, residential)
     if 'type' in targeting and targeting['type']:
         parts.extend(['type', targeting['type'].lower()])
     
-    # IP version (always add ipv4-true to match website format)
-    ipv4_only = targeting.get('ipv4', True)
-    parts.extend(['ipv4', 'true' if ipv4_only else 'false'])
+    # IP version (only add if explicitly requested or not default)
+    if 'ipv4' in targeting:
+        ipv4_value = targeting['ipv4']
+        if ipv4_value is True:
+            parts.extend(['ipv4', 'true'])
+        elif ipv4_value is False:
+            parts.extend(['ipv4', 'false'])
     
-    # Session ID for sticky sessions (always add if session provided or sticky=True)
+    # Session ID for sticky sessions
+    session_id = None
     if 'session' in targeting and targeting['session']:
-        parts.extend(['sid', str(targeting['session'])])
+        session_id = str(targeting['session'])
+        parts.extend(['sid', session_id])
     elif targeting.get('sticky', False):
         # Generate random session ID for sticky sessions
-        parts.extend(['sid', generate_session_id()])
+        session_id = generate_session_id()
+        parts.extend(['sid', session_id])
     
-    # IP filter quality (always add to match website format)
-    ip_filter = targeting.get('filter', 'medium')
-    parts.extend(['filter', ip_filter])
+    # TTL (Time-To-Live) for sticky sessions - NEW FUNCTIONALITY
+    if 'ttl' in targeting and targeting['ttl'] and session_id:
+        ttl_value = targeting['ttl']
+        if validate_ttl_format(ttl_value):
+            parts.extend(['ttl', ttl_value])
+        else:
+            raise ValueError(f"Invalid TTL format: {ttl_value}. Valid formats: 60s, 1m, 5m, 1h, 24h")
+    
+    # IP filter quality (only add if explicitly requested)
+    if 'filter' in targeting and targeting['filter']:
+        parts.extend(['filter', targeting['filter']])
     
     return '-'.join(parts)
 
