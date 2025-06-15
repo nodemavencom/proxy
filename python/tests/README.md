@@ -1,18 +1,104 @@
-# NodeMaven Tests 🧪
+# NodeMaven Python SDK Tests
 
-This directory contains tests for the NodeMaven Python SDK.
+Clean and simple test suite for the NodeMaven Python SDK.
 
-## 📋 Test Types
+## Test Structure
 
-### ✅ **Unit Tests** (`test_unit.py`)
-- **Purpose**: Test individual functions and classes **without external dependencies**
-- **Requirements**: No API key needed, no network access required
+We have **only 2 test files** - simple and focused! 🎯
+
+### 🔧 Unit Tests (`test_unit.py`)
+- **Purpose**: Test core functionality without external dependencies
+- **Requirements**: No API key needed
 - **Usage**: Perfect for CI/CD pipelines and quick development testing
-- **Coverage**: Utility functions, exception handling, client initialization, proxy URL building
+- **Coverage**: Utility functions, exceptions, client initialization, proxy URL building
 
 ```bash
 # Run unit tests (CI/CD safe)
-python -m pytest tests/test_unit.py -v
+python -m pytest test_unit.py -v
+```
+
+### 🌐 Integration Tests (`test_integration.py`)
+- **Purpose**: Test real API interactions and proxy functionality
+- **Requirements**: Valid NodeMaven API key in `NODEMAVEN_APIKEY` environment variable
+- **Usage**: Local testing and verification of actual service integration
+- **Coverage**: Real API calls, proxy connections, IP verification
+
+```bash
+# Run integration tests (requires API key)
+python -m pytest test_integration.py -v
+```
+
+## Quick Start
+
+### 1. Install Dependencies
+```bash
+cd python/tests
+pip install -r requirements-test.txt
+```
+
+### 2. Run Tests
+```bash
+# Unit tests only (CI/CD safe - no API key needed)
+python -m pytest test_unit.py -v
+
+# Integration tests (requires API key)
+set NODEMAVEN_APIKEY=your_api_key_here  # Windows
+export NODEMAVEN_APIKEY="your_api_key_here"  # Linux/Mac
+python -m pytest test_integration.py -v
+
+# All tests together
+python -m pytest -v
+```
+
+## GitHub Actions CI/CD
+
+For CI/CD, only unit tests run automatically (no API key required):
+
+```yaml
+- name: Install test dependencies
+  run: |
+    cd python/tests
+    pip install -r requirements-test.txt
+
+- name: Run unit tests
+  run: |
+    cd python/tests
+    python -m pytest test_unit.py -v
+```
+
+This ensures reliable, fast testing without requiring API keys in the CI environment.
+
+## Test Summary
+
+| File | Tests | Dependencies | Purpose |
+|------|-------|--------------|---------|
+| `test_unit.py` | 14 tests | None | Core functionality verification |
+| `test_integration.py` | 8 tests | API Key + Network | Real-world integration testing |
+
+**Total: 22 tests covering all essential functionality**
+
+## File Structure
+```
+tests/
+├── test_unit.py          # Unit tests (GitHub CI safe)
+├── test_integration.py   # Integration tests (requires API key)  
+├── conftest.py          # Simple pytest configuration
+├── requirements-test.txt # Only essential dependencies
+└── README.md            # This file
+```
+
+## What We Removed
+
+Previously had 15+ confusing test files. Now simplified to just 2 essential files:
+- ❌ Removed: Complex comprehensive tests, duplicate utilities, confusing runners
+- ✅ Kept: Clean unit tests + focused integration tests
+- 🚀 Result: Simple, fast, reliable testing that works great in CI/CD!
+
+**Clean, focused, and easy to understand!** 🎯
+
+```bash
+# Run unit tests (CI/CD safe)
+python -m pytest test_unit.py -v
 ```
 
 ### 🌐 **Integration Tests** (`test_integration_*.py`)
@@ -40,7 +126,7 @@ python tests/test_integration_ip_checker.py
 ### For Development (Unit Tests Only)
 ```bash
 # Fast, no API key needed
-python -m pytest tests/test_unit.py -v
+python -m pytest test_unit.py -v
 ```
 
 ### For Full Verification (All Tests)
@@ -52,7 +138,7 @@ python -m pytest tests/ -v
 ### For CI/CD (GitHub Actions)
 ```bash
 # Only unit tests run in CI/CD
-python -m pytest tests/test_unit.py -v
+python -m pytest test_unit.py -v
 ```
 
 ## 📊 Test Coverage

@@ -1,25 +1,4 @@
-# Test Dependencies for NodeMaven SDK
-# Core testing framework
+# Essential test dependencies for NodeMaven SDK
 pytest>=7.0.0
 pytest-cov>=4.0.0
-pytest-mock>=3.10.0
-pytest-asyncio>=0.21.0
-
-# Performance and benchmark testing
-pytest-benchmark>=4.0.0
-memory-profiler>=0.60.0
-
-# HTTP mocking for integration tests
-responses>=0.23.0
-
-# Test reporting
-pytest-html>=3.1.0
-coverage[toml]>=7.0.0
-
-# Required for actual functionality testing
-requests>=2.28.0
-
-# Development utilities
-black>=22.0.0
-flake8>=5.0.0
-mypy>=1.0.0 
+requests>=2.28.0 
