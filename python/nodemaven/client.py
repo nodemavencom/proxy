@@ -310,4 +310,45 @@ class NodeMavenClient:
     
     def delete_whitelist_ip(self, ip_id: str) -> Dict[str, Any]:
         """Remove an IP address from the whitelist."""
-        return self._make_request('DELETE', f'/api/v2/base/whitelist-ips/{ip_id}/') 
+        return self._make_request('DELETE', f'/api/v2/base/whitelist-ips/{ip_id}/')
+    
+    def getProxyConfig(self, options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """
+        Get proxy configuration for HTTP/HTTPS usage with targeting options.
+        
+        Args:
+            options (Dict, optional): Targeting options including:
+                - country (str): Country code (e.g., 'US', 'GB')
+                - region (str): Region/state name
+                - city (str): City name
+                - session (str): Session ID for sticky sessions
+                - type (str): Connection type ('residential' or 'mobile')
+                - format (str): Output format ('username_password' or 'endpoint')
+        
+        Returns:
+            Dict containing proxy configuration with host, ports, username, password
+        """
+        # Use the utility function if options provided, otherwise call API directly
+        if options:
+            from .utils import get_proxy_config
+            return get_proxy_config(**options)
+        else:
+            # Default API call for basic proxy config
+            return self._make_request('GET', '/api/v2/residential/sticky-session/')
+
+    def getSocks5ProxyUrl(self, options: Optional[Dict[str, Any]] = None) -> str:
+        """
+        Get SOCKS5 proxy URL with targeting options.
+        
+        Args:
+            options (Dict, optional): Same targeting options as getProxyConfig
+        
+        Returns:
+            String containing the SOCKS5 proxy URL
+        """
+        from .utils import get_socks5_proxy
+        if options:
+            return get_socks5_proxy(**options)
+        else:
+            # Default SOCKS5 proxy
+            return get_socks5_proxy() 
