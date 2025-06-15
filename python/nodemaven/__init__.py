@@ -1,9 +1,22 @@
 """
-NodeMaven API Client
+NodeMaven Python SDK
 
-A Python client library for the NodeMaven proxy service API.
-Provides access to residential and mobile proxies with global coverage.
+Official Python client library for NodeMaven proxy services.
+Provides comprehensive proxy management, IP geolocation, and testing utilities.
+
+Example usage:
+    from nodemaven import NodeMavenClient
+    
+    client = NodeMavenClient()
+    user_info = client.get_user_info()
+    print(f"Connected as: {user_info['email']}")
 """
+
+__version__ = "1.0.0"
+__author__ = "NodeMaven Team"
+__email__ = "support@nodemaven.com"
+__license__ = "MIT"
+__url__ = "https://github.com/nodemavencom/proxy"
 
 from .client import NodeMavenClient
 from .exceptions import (
@@ -15,12 +28,9 @@ from .exceptions import (
     ServerError
 )
 
-__version__ = "1.0.0"
-__author__ = "NodeMaven Team"
-__email__ = "support@nodemaven.com"
-
 __all__ = [
     "NodeMavenClient",
+    "__version__",
     "NodeMavenAPIError",
     "AuthenticationError", 
     "RateLimitError",
