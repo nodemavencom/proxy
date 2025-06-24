@@ -1,4 +1,4 @@
-# NodeMaven - Professional Proxy API 🚀
+# NodeMaven - 🚀 Professional Proxy API 🚀
 
 [![Python](https://img.shields.io/badge/Python-Ready-brightgreen?style=for-the-badge&logo=python)](https://github.com/nodemavencom/proxy/tree/main/proxy/python)
 [![JavaScript](https://img.shields.io/badge/JavaScript-Ready-brightgreen?style=for-the-badge&logo=javascript)](https://github.com/nodemavencom/proxy/tree/main/proxy/javascript)
